@@ -45,6 +45,8 @@
           name: newCharName, 
           comp: CharacterCard
         }); 
+        this.$store.commit('increaseCount'); 
+        console.log("Current project count: " + this.$store.state.count); 
       }
     }
   }
