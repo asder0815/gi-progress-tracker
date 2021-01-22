@@ -24,6 +24,17 @@ export default new Vuex.Store({
       {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 3, elementalMat_T4: 0, core: 8, speciality: 30, commonMat_T1: 0, commonMat_T2: 18, commonMat_T3: 0, mora: 80000},
       {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 6, elementalMat_T4: 0, core: 12, speciality: 45, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 12, mora: 100000},
       {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 6, core: 20, speciality: 60, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 24, mora: 120000}  
+    ], 
+    talentTable: [
+      {book_T1: 3, book_T2: 0, book_T3: 0, commonMat_T1: 6, commonMat_T2: 0, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 12500},
+      {book_T1: 0, book_T2: 2, book_T3: 0, commonMat_T1: 0, commonMat_T2: 3, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 17500},
+      {book_T1: 0, book_T2: 4, book_T3: 0, commonMat_T1: 0, commonMat_T2: 4, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 25000},
+      {book_T1: 0, book_T2: 6, book_T3: 0, commonMat_T1: 0, commonMat_T2: 6, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 30000},
+      {book_T1: 0, book_T2: 9, book_T3: 0, commonMat_T1: 0, commonMat_T2: 9, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 37500},
+      {book_T1: 0, book_T2: 0, book_T3: 4, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 4, worldBossMat: 1, crown: 0, mora: 120000},
+      {book_T1: 0, book_T2: 0, book_T3: 6, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 6, worldBossMat: 1, crown: 0, mora: 260000},
+      {book_T1: 0, book_T2: 0, book_T3: 12, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 9, worldBossMat: 2, crown: 0, mora: 450000},
+      {book_T1: 0, book_T2: 0, book_T3: 16, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 12, worldBossMat: 2, crown: 1, mora: 700000}
     ]
   },
   mutations: {

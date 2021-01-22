@@ -14,23 +14,22 @@
       <v-row no-gutters>
         <v-col order="last">
           <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-          <vue-slider v-model="atkLevel" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+          <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
         <v-col>
           <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-          <vue-slider v-model="skillLevel" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+          <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
         <v-col order="first">
           <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-          <vue-slider v-model="burstLevel" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+          <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
       </v-row>
     </v-container>
     <p>Required XP: {{summary_requiredXP}}</p>
     <p>Required Mora: {{summary_requiredMora}}</p>
     <p>Required Ascension Materials: Elemental: T1: {{summary_requiredAscensionMats.elementalMat_T1}} T2: {{summary_requiredAscensionMats.elementalMat_T2}} T3: {{summary_requiredAscensionMats.elementalMat_T3}} T4: {{summary_requiredAscensionMats.elementalMat_T4}}</p>
-    <!--p>Required Levels: {{requiredLevels}}</p!-->
-    <!--p>Required Ascensions: {{requiredAscensions}}</p!-->
+    <p>Required Talent Materials: Books: T1: {{summary_requiredTalentMats.book_T1}} T2: {{summary_requiredTalentMats.book_T2}} T3: {{summary_requiredTalentMats.book_T3}}</p>
     <p>Required Atk Talents: {{requiredAtkTalents}}</p>
     <p>Required Skill Talents: {{requiredSkillTalents}}</p>
     <p>Required Burst Talents: {{requiredBurstTalents}}</p>
@@ -52,9 +51,9 @@ export default {
   data: () => ({
     level: [0, 90], 
     ascension: [0, 6],
-    atkLevel: [0, 10],
-    skillLevel: [0, 10], 
-    burstLevel: [0, 10]
+    atkLevel: [1, 10],
+    skillLevel: [1, 10], 
+    burstLevel: [1, 10]
   }), 
   computed: {
     requiredLevels: function() {
@@ -118,6 +117,8 @@ export default {
       for(var i = start;  i < end; i++) {
         result += xpTable[i].mora; 
       }
+      result += this.summary_requiredAscensionMats.mora; 
+      result += this.summary_requiredTalentMats.mora; 
       return result; 
     },
     summary_requiredAscensionMats: function() {
@@ -135,7 +136,47 @@ export default {
         result.commonMat_T3 += ascTable[i].commonMat_T3; 
         result.mora += ascTable[i].mora; 
       }
-      console.log(result); 
+      return result; 
+    }, 
+    summary_requiredTalentMats: function() {
+      var talTable = this.$store.state.talentTable; 
+      var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
+      for(var i = Math.min(...this.requiredAtkTalents)-2; i < Math.max(...this.requiredAtkTalents)-1; i++)
+      {
+        result.book_T1 += talTable[i].book_T1;
+        result.book_T2 += talTable[i].book_T2;
+        result.book_T3 += talTable[i].book_T3; 
+        result.commonMat_T1 += talTable[i].commonMat_T1; 
+        result.commonMat_T2 += talTable[i].commonMat_T2; 
+        result.commonMat_T3 += talTable[i].commonMat_T3; 
+        result.worldBossMat += talTable[i].worldBossMat; 
+        result.crown += talTable[i].crown; 
+        result.mora += talTable[i].mora; 
+      }
+      for(var j = Math.min(...this.requiredSkillTalents)-2; j < Math.max(...this.requiredSkillTalents)-1; j++)
+      {
+        result.book_T1 += talTable[j].book_T1;
+        result.book_T2 += talTable[j].book_T2;
+        result.book_T3 += talTable[j].book_T3; 
+        result.commonMat_T1 += talTable[j].commonMat_T1; 
+        result.commonMat_T2 += talTable[j].commonMat_T2; 
+        result.commonMat_T3 += talTable[j].commonMat_T3; 
+        result.worldBossMat += talTable[j].worldBossMat; 
+        result.crown += talTable[j].crown; 
+        result.mora += talTable[j].mora; 
+      }
+      for(var k = Math.min(...this.requiredSkillTalents)-2; k < Math.max(...this.requiredSkillTalents)-1; k++)
+      {
+        result.book_T1 += talTable[k].book_T1;
+        result.book_T2 += talTable[k].book_T2;
+        result.book_T3 += talTable[k].book_T3; 
+        result.commonMat_T1 += talTable[k].commonMat_T1; 
+        result.commonMat_T2 += talTable[k].commonMat_T2; 
+        result.commonMat_T3 += talTable[k].commonMat_T3; 
+        result.worldBossMat += talTable[k].worldBossMat; 
+        result.crown += talTable[k].crown; 
+        result.mora += talTable[k].mora; 
+      }
       return result; 
     }
   }, 
