@@ -12,6 +12,9 @@ export default new Vuex.Store({
       { 
         name: 'Rosaria', 
         picture: require('@/assets/character_portraits/rosaria.png'), 
+        iconAtk: require('@/assets/talent_icons/rosaria_atk.jpg'), 
+        iconSkill: require('@/assets/talent_icons/rosaria_skill.jpg'), 
+        iconBurst: require('@/assets/talent_icons/rosaria_burst.jpg'),
         elementalMat: 'Shivada Jade', 
         core: 'Hoarfrost Core', 
         speciality: 'Valberry', 
@@ -24,6 +27,9 @@ export default new Vuex.Store({
       { 
         name: 'Beidou', 
         picture: require('@/assets/character_portraits/rosaria.png'), 
+        iconAtk: require('@/assets/talent_icons/rosaria_atk.jpg'), 
+        iconSkill: require('@/assets/talent_icons/rosaria_skill.jpg'), 
+        iconBurst: require('@/assets/talent_icons/rosaria_burst.jpg'),
         elementalMat: 'Shivada Jade', 
         core: 'Hoarfrost Core', 
         speciality: 'Valberry', 

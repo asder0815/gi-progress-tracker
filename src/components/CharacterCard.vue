@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="344" outlined>
+  <v-card class="mx-auto" max-width="400" outlined>
     <v-list-item three-line>
       <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
       <v-list-item-content>
@@ -7,26 +7,32 @@
         <v-list-item-subtitle>{{characterData.description}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <vue-slider v-model="level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true" :drag-on-click="true"></vue-slider>
-    <vue-slider v-model="ascension" :max="6" :marks="true" :contained="true" :drag-on-click="true"></vue-slider>
+    <v-row>
+      <v-col :cols="3">Level: </v-col>
+      <v-col :cols="9"><vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true" :drag-on-click="true"/></v-col>
+    </v-row>
+    <v-row>
+      <v-col :cols="3">Ascension: </v-col>
+      <v-col :cols="9"><vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true" :drag-on-click="true"/></v-col>
+    </v-row>
 
     <v-container class="grey lighten-5">
       <v-row no-gutters>
-        <v-col order="last">
-          <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+        <v-col order="first" align="center">
+          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconAtk"></v-list-item-avatar>
           <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
-        <v-col>
-          <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+        <v-col align="center">
+          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconSkill"></v-list-item-avatar>
           <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
-        <v-col order="first">
-          <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+        <v-col order="last" align="center">
+          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconBurst"></v-list-item-avatar>
           <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
         </v-col>
       </v-row>
     </v-container>
-  </v-card>
+  </v-card> 
 </template>
 
 <script>
@@ -52,7 +58,8 @@ export default {
     ascension: [0, 6],
     atkLevel: [1, 10],
     skillLevel: [1, 10], 
-    burstLevel: [1, 10]
+    burstLevel: [1, 10], 
+    labels: {level: "Levels: ", ascension: "Ascensions: "}
   }), 
   computed: {
     requiredLevels: function() {
