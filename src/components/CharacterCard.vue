@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-auto" max-width="344" outlined>
     <v-list-item three-line>
-      <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+      <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="headline mb-1">{{name}}</v-list-item-title>
-        <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+        <v-list-item-title class="headline mb-1">{{characterData.name}}</v-list-item-title>
+        <v-list-item-subtitle>{{characterData.description}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <vue-slider v-model="level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true" :drag-on-click="true"></vue-slider>
@@ -26,13 +26,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <p>Required XP: {{summary_requiredXP}}</p>
-    <p>Required Mora: {{summary_requiredMora}}</p>
-    <p>Required Ascension Materials: Elemental: T1: {{summary_requiredAscensionMats.elementalMat_T1}} T2: {{summary_requiredAscensionMats.elementalMat_T2}} T3: {{summary_requiredAscensionMats.elementalMat_T3}} T4: {{summary_requiredAscensionMats.elementalMat_T4}}</p>
-    <p>Required Talent Materials: Books: T1: {{summary_requiredTalentMats.book_T1}} T2: {{summary_requiredTalentMats.book_T2}} T3: {{summary_requiredTalentMats.book_T3}}</p>
-    <p>Required Atk Talents: {{requiredAtkTalents}}</p>
-    <p>Required Skill Talents: {{requiredSkillTalents}}</p>
-    <p>Required Burst Talents: {{requiredBurstTalents}}</p>
   </v-card>
 </template>
 
@@ -46,7 +39,13 @@ export default {
     VueSlider
   },
   props: {
-    name: String
+    characterData: {
+      type: Object, 
+      required: true, 
+      validator: characterData => {
+        return characterData != undefined; 
+      }
+    }
   },
   data: () => ({
     level: [0, 90], 

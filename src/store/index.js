@@ -8,6 +8,32 @@ export default new Vuex.Store({
     count: 0, 
     xpAll: 0, 
     moraAll: 0,
+    characters: [
+      { 
+        name: 'Rosaria', 
+        picture: require('@/assets/character_portraits/rosaria.png'), 
+        elementalMat: 'Shivada Jade', 
+        core: 'Hoarfrost Core', 
+        speciality: 'Valberry', 
+        commonMat_Ascension: 'Insignia', 
+        commonMat_Talent: 'Nectar', 
+        book: 'Prosperity', 
+        worldBossMat: 'Ring of Boreas', 
+        description: "MILKY MILKY WARM AND TASTY! MOMMY! MILKY! PLEASE BE HASTY! REFRESHING DRINK FROM MOMMY’S UDDERS! I WANT MOMMY’S AND NO OTHER’S! GIVE IT! GIVE IT! GIVE IT NOW! GIVE ME MILKY, LAZY SOW! UNTIL YOU DO I’LL SCREAM I’LL SHOUT! I’LL CRY I’LL WHINE AND STOMP ABOUT! UNTIL MY BELLY IS FULL AND HAPPY! I REFUSE TO TAKE A NAPPY!"
+      }, 
+      { 
+        name: 'Beidou', 
+        picture: require('@/assets/character_portraits/rosaria.png'), 
+        elementalMat: 'Shivada Jade', 
+        core: 'Hoarfrost Core', 
+        speciality: 'Valberry', 
+        commonMat_Ascension: 'Insignia', 
+        commonMat_Talent: 'Nectar', 
+        book: 'Prosperity', 
+        worldBossMat: 'Ring of Boreas', 
+        description: "Cringe"
+      }
+    ], 
     xpTable: [
       {xp: 120175, mora: 24000},
       {xp: 578325, mora: 115600}, 
