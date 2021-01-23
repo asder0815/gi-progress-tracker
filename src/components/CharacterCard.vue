@@ -134,17 +134,10 @@ export default {
     summary_requiredAscensionMats: function() {
       var ascTable = this.$store.state.ascensionTable;
       var result = {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 0, core: 0, speciality: 0, commonMat_Ascension_T1: 0, commonMat_Ascension_T2: 0, commonMat_Ascension_T3: 0, mora: 0}; 
-      for(var i = Math.min(...this.requiredAscensions) - 1;  i < Math.max(...this.requiredAscensions); i++) {
-        result.elementalMat_T1 += ascTable[i].elementalMat_T1;
-        result.elementalMat_T2 += ascTable[i].elementalMat_T2;
-        result.elementalMat_T3 += ascTable[i].elementalMat_T3;
-        result.elementalMat_T4 += ascTable[i].elementalMat_T4;
-        result.core += ascTable[i].core; 
-        result.speciality += ascTable[i].speciality; 
-        result.commonMat_Ascension_T1 += ascTable[i].commonMat_T1; 
-        result.commonMat_Ascension_T2 += ascTable[i].commonMat_T2; 
-        result.commonMat_Ascension_T3 += ascTable[i].commonMat_T3; 
-        result.mora += ascTable[i].mora; 
+      for(var i = Math.min(...this.requiredAscensions)-1; i < Math.max(...this.requiredAscensions); i++) {
+        Object.keys(result).forEach(function(key) {
+          result[key] += ascTable[i][key];
+        });
       }
       return result; 
     }, 
