@@ -3,6 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const C = {
+  materials: {
+    crown: {name: 'Crown of Insight', icon: require('@/assets/material_icons/Item_Crown_of_Insight.webp')}, 
+    ice_crystal_T1: {name: 'Shivada Jade Sliver', icon: require('@/assets/material_icons/Item_Shivada_Jade_Sliver.webp')}, 
+    ice_crystal_T2: {name: 'Shivada Jade Fragment', icon: require('@/assets/material_icons/Item_Shivada_Jade_Fragment.webp')}, 
+    ice_crystal_T3: {name: 'Shivada Jade Chunk', icon: require('@/assets/material_icons/Item_Shivada_Jade_Chunk.webp')}, 
+    ice_crystal_T4: {name: 'Shivada Jade Gemstone', icon: require('@/assets/material_icons/Item_Shivada_Jade_Gemstone.webp')}, 
+    book_prosperity_T1: {name: 'Guide to Prosperity', icon: require('@/assets/material_icons/Item_Guide_to_Prosperity.webp')},
+    book_prosperity_T2: {name: 'Teachings of Prosperity', icon: require('@/assets/material_icons/Item_Guide_to_Prosperity.webp')},
+    book_prosperity_T3: {name: 'Philosophies of Prosperity', icon: require('@/assets/material_icons/Item_Philosophies_of_Prosperity.webp')},
+    item_fatui_insignia_T1: {name: 'Recruit Insignia', icon: require('@/assets/material_icons/Item_Recruit_Insignia.webp')}, 
+    item_fatui_insignia_T2: {name: 'Lieutnant Insignia', icon: require('@/assets/material_icons/Item_Lieutenant_Insignia.webp')}, 
+    item_fatui_insignia_T3: {name: 'Sergeant Insignia', icon: require('@/assets/material_icons/Item_Sergeant_Insignia.webp')}, 
+    boss_ring_of_boreas: {name: 'Ring of Boreas', icon: require('@/assets/material_icons/Item_Ring_of_Boreas.webp')}, 
+    item_hoarfrost_core: {name: 'Hoarfrost Core', icon: require('@/assets/material_icons/Item_Hoarfrost_Core.webp')}, 
+    speciality_valberry: {name: 'Valberry', icon: require('@/assets/material_icons/Item_Valberry.webp')}, 
+    item_nectar_T1: {name: 'Whopperflower Nectar', icon: require('@/assets/material_icons/Item_Whopperflower_Nectar.webp')}, 
+    item_nectar_T2: {name: 'Shimmering Nectar', icon: require('@/assets/material_icons/Item_Shimmering_Nectar.webp')}, 
+    item_nectar_T3: {name: 'Energy Nectar', icon: require('@/assets/material_icons/Item_Energy_Nectar.webp')}
+  }
+}
+
 export default new Vuex.Store({
   state: {
     count: 0, 
@@ -15,31 +37,26 @@ export default new Vuex.Store({
         iconAtk: require('@/assets/talent_icons/rosaria_atk.jpg'), 
         iconSkill: require('@/assets/talent_icons/rosaria_skill.jpg'), 
         iconBurst: require('@/assets/talent_icons/rosaria_burst.jpg'),
-        elementalMat: 'Shivada Jade', 
-        core: 'Hoarfrost Core', 
-        speciality: 'Valberry', 
-        commonMat_Ascension: 'Insignia', 
-        commonMat_Talent: 'Nectar', 
-        book: 'Prosperity', 
-        worldBossMat: 'Ring of Boreas', 
+        elementalMat_T1: C.materials.ice_crystal_T1, 
+        elementalMat_T2: C.materials.ice_crystal_T2, 
+        elementalMat_T3: C.materials.ice_crystal_T3, 
+        elementalMat_T4: C.materials.ice_crystal_T4, 
+        core: C.materials.item_hoarfrost_core,
+        speciality: C.materials.speciality_valberry, 
+        commonMat_Ascension_T1: C.materials.item_fatui_insignia_T1, 
+        commonMat_Ascension_T2: C.materials.item_fatui_insignia_T2, 
+        commonMat_Ascension_T3: C.materials.item_fatui_insignia_T3, 
+        commonMat_Talent_T1: C.materials.item_nectar_T1, 
+        commonMat_Talent_T2: C.materials.item_nectar_T2, 
+        commonMat_Talent_T3: C.materials.item_nectar_T3, 
+        book_T1: C.materials.book_prosperity_T1, 
+        book_T2: C.materials.book_prosperity_T2,
+        book_T3: C.materials.book_prosperity_T3,
+        worldBossMat: C.materials.boss_ring_of_boreas, 
+        crown: C.materials.crown, 
         description: "MILKY MILKY WARM AND TASTY! MOMMY! MILKY! PLEASE BE HASTY! REFRESHING DRINK FROM MOMMY’S UDDERS! I WANT MOMMY’S AND NO OTHER’S! GIVE IT! GIVE IT! GIVE IT NOW! GIVE ME MILKY, LAZY SOW! UNTIL YOU DO I’LL SCREAM I’LL SHOUT! I’LL CRY I’LL WHINE AND STOMP ABOUT! UNTIL MY BELLY IS FULL AND HAPPY! I REFUSE TO TAKE A NAPPY!"
-      }, 
-      { 
-        name: 'Beidou', 
-        picture: require('@/assets/character_portraits/rosaria.png'), 
-        iconAtk: require('@/assets/talent_icons/rosaria_atk.jpg'), 
-        iconSkill: require('@/assets/talent_icons/rosaria_skill.jpg'), 
-        iconBurst: require('@/assets/talent_icons/rosaria_burst.jpg'),
-        elementalMat: 'Shivada Jade', 
-        core: 'Hoarfrost Core', 
-        speciality: 'Valberry', 
-        commonMat_Ascension: 'Insignia', 
-        commonMat_Talent: 'Nectar', 
-        book: 'Prosperity', 
-        worldBossMat: 'Ring of Boreas', 
-        description: "Cringe"
       }
-    ], 
+    ],
     xpTable: [
       {xp: 120175, mora: 24000},
       {xp: 578325, mora: 115600}, 

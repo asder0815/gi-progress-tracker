@@ -32,6 +32,9 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-data-table :headers="headers" :items="tableItems" :items-per-page="10" class="elevation-1"></v-data-table>
+
   </v-card> 
 </template>
 
@@ -59,7 +62,8 @@ export default {
     atkLevel: [1, 10],
     skillLevel: [1, 10], 
     burstLevel: [1, 10], 
-    labels: {level: "Levels: ", ascension: "Ascensions: "}
+    labels: {level: "Levels: ", ascension: "Ascensions: "}, 
+    headers: [{text: "Material", align: "start", value: "name"}, {text: "Icon", sortable: "false", value: "icon"}, {text: "Amount", value: "amount"}]
   }), 
   computed: {
     requiredLevels: function() {
@@ -129,7 +133,7 @@ export default {
     },
     summary_requiredAscensionMats: function() {
       var ascTable = this.$store.state.ascensionTable;
-      var result = {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 0, core: 0, speciality: 0, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 0, mora: 0}; 
+      var result = {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 0, core: 0, speciality: 0, commonMat_Ascension_T1: 0, commonMat_Ascension_T2: 0, commonMat_Ascension_T3: 0, mora: 0}; 
       for(var i = Math.min(...this.requiredAscensions) - 1;  i < Math.max(...this.requiredAscensions); i++) {
         result.elementalMat_T1 += ascTable[i].elementalMat_T1;
         result.elementalMat_T2 += ascTable[i].elementalMat_T2;
@@ -137,24 +141,24 @@ export default {
         result.elementalMat_T4 += ascTable[i].elementalMat_T4;
         result.core += ascTable[i].core; 
         result.speciality += ascTable[i].speciality; 
-        result.commonMat_T1 += ascTable[i].commonMat_T1; 
-        result.commonMat_T2 += ascTable[i].commonMat_T2; 
-        result.commonMat_T3 += ascTable[i].commonMat_T3; 
+        result.commonMat_Ascension_T1 += ascTable[i].commonMat_T1; 
+        result.commonMat_Ascension_T2 += ascTable[i].commonMat_T2; 
+        result.commonMat_Ascension_T3 += ascTable[i].commonMat_T3; 
         result.mora += ascTable[i].mora; 
       }
       return result; 
     }, 
     summary_requiredTalentMats: function() {
       var talTable = this.$store.state.talentTable; 
-      var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
+      var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_Talent_T1: 0, commonMat_Talent_T2: 0, commonMat_Talent_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
       for(var i = Math.min(...this.requiredAtkTalents)-2; i < Math.max(...this.requiredAtkTalents)-1; i++)
       {
         result.book_T1 += talTable[i].book_T1;
         result.book_T2 += talTable[i].book_T2;
         result.book_T3 += talTable[i].book_T3; 
-        result.commonMat_T1 += talTable[i].commonMat_T1; 
-        result.commonMat_T2 += talTable[i].commonMat_T2; 
-        result.commonMat_T3 += talTable[i].commonMat_T3; 
+        result.commonMat_Talent_T1 += talTable[i].commonMat_Talent_T1; 
+        result.commonMat_Talent_T2 += talTable[i].commonMat_Talent_T2; 
+        result.commonMat_Talent_T3 += talTable[i].commonMat_Talent_T3; 
         result.worldBossMat += talTable[i].worldBossMat; 
         result.crown += talTable[i].crown; 
         result.mora += talTable[i].mora; 
@@ -164,9 +168,9 @@ export default {
         result.book_T1 += talTable[j].book_T1;
         result.book_T2 += talTable[j].book_T2;
         result.book_T3 += talTable[j].book_T3; 
-        result.commonMat_T1 += talTable[j].commonMat_T1; 
-        result.commonMat_T2 += talTable[j].commonMat_T2; 
-        result.commonMat_T3 += talTable[j].commonMat_T3; 
+        result.commonMat_Talent_T1 += talTable[j].commonMat_Talent_T1; 
+        result.commonMat_Talent_T2 += talTable[j].commonMat_Talent_T2; 
+        result.commonMat_Talent_T3 += talTable[j].commonMat_Talent_T3; 
         result.worldBossMat += talTable[j].worldBossMat; 
         result.crown += talTable[j].crown; 
         result.mora += talTable[j].mora; 
@@ -176,13 +180,23 @@ export default {
         result.book_T1 += talTable[k].book_T1;
         result.book_T2 += talTable[k].book_T2;
         result.book_T3 += talTable[k].book_T3; 
-        result.commonMat_T1 += talTable[k].commonMat_T1; 
-        result.commonMat_T2 += talTable[k].commonMat_T2; 
-        result.commonMat_T3 += talTable[k].commonMat_T3; 
+        result.commonMat_Talent_T1 += talTable[k].commonMat_Talent_T1; 
+        result.commonMat_Talent_T2 += talTable[k].commonMat_Talent_T2; 
+        result.commonMat_Talent_T3 += talTable[k].commonMat_Talent_T3; 
         result.worldBossMat += talTable[k].worldBossMat; 
         result.crown += talTable[k].crown; 
         result.mora += talTable[k].mora; 
       }
+      return result; 
+    }, 
+    tableItems: function() {
+      var result = []; 
+      var data = this.characterData; 
+      [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
+        Object.keys(summary).forEach(function(key) {
+          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
+        });
+      }); 
       return result; 
     }
   }, 
