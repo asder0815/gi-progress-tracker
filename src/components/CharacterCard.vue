@@ -83,48 +83,18 @@ export default {
     }, 
     summary_requiredXP: function() {
       var xpTable = this.$store.state.xpTable;
-      var start = 0; 
-      var end = 6; 
-      if(this.requiredLevels[0]-1 == 20) start = 1;
-      if(this.requiredLevels[0]-1 == 40) start = 2;
-      if(this.requiredLevels[0]-1 == 50) start = 3;
-      if(this.requiredLevels[0]-1 == 60) start = 4;
-      if(this.requiredLevels[0]-1 == 70) start = 5; 
-      if(this.requiredLevels[0]-1 == 80) start = 6;
-      if(this.requiredLevels[0]-1 == 90) start = 7;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 20) end = 1;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 40) end = 2;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 50) end = 3;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 60) end = 4;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 70) end = 5; 
-      if(this.requiredLevels[this.requiredLevels.length-1] == 80) end = 6;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 90) end = 7;
+      var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
       var result = 0;
-      for(var i = start;  i < end; i++) {
+      for(var i = range.start;  i < range.end; i++) {
         result += xpTable[i].xp; 
       }
       return result; 
     }, 
     summary_requiredMora: function() {
       var xpTable = this.$store.state.xpTable;
-      var start = 0; 
-      var end = 6; 
-      if(this.requiredLevels[0]-1 == 20) start = 1;
-      if(this.requiredLevels[0]-1 == 40) start = 2;
-      if(this.requiredLevels[0]-1 == 50) start = 3;
-      if(this.requiredLevels[0]-1 == 60) start = 4;
-      if(this.requiredLevels[0]-1 == 70) start = 5; 
-      if(this.requiredLevels[0]-1 == 80) start = 6;
-      if(this.requiredLevels[0]-1 == 90) start = 7;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 20) end = 1;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 40) end = 2;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 50) end = 3;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 60) end = 4;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 70) end = 5; 
-      if(this.requiredLevels[this.requiredLevels.length-1] == 80) end = 6;
-      if(this.requiredLevels[this.requiredLevels.length-1] == 90) end = 7;
+      var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
       var result = 0; 
-      for(var i = start;  i < end; i++) {
+      for(var i = range.start;  i < range.end; i++) {
         result += xpTable[i].mora; 
       }
       result += this.summary_requiredAscensionMats.mora; 
@@ -168,13 +138,15 @@ export default {
   }, 
   methods: {
     getRequired: function(array) {
-      var min = Math.min(...array); 
-      var max = Math.max(...array); 
       var list = [];
-      for (var i = min; i < max; i++) {
+      for (var i = Math.min(...array); i < Math.max(...array); i++) {
         list.push(i+1);
       }
       return list;
+    }, 
+    getLevelRange: function(array) {
+      var dict = [{v: 0, i:0},{v: 20, i: 1},{v: 40, i: 2},{v: 50, i: 3},{v: 60, i: 4},{v: 70, i: 5},{v: 80, i: 6},{v: 90, i:7}]; 
+      return {start: dict.find(obj => { return obj.v === array[0]; }).i, end: dict.find(obj => { return obj.v === array[1]; }).i}; 
     }
   }
 }
