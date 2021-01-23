@@ -151,42 +151,13 @@ export default {
     summary_requiredTalentMats: function() {
       var talTable = this.$store.state.talentTable; 
       var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_Talent_T1: 0, commonMat_Talent_T2: 0, commonMat_Talent_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
-      for(var i = Math.min(...this.requiredAtkTalents)-2; i < Math.max(...this.requiredAtkTalents)-1; i++)
-      {
-        result.book_T1 += talTable[i].book_T1;
-        result.book_T2 += talTable[i].book_T2;
-        result.book_T3 += talTable[i].book_T3; 
-        result.commonMat_Talent_T1 += talTable[i].commonMat_Talent_T1; 
-        result.commonMat_Talent_T2 += talTable[i].commonMat_Talent_T2; 
-        result.commonMat_Talent_T3 += talTable[i].commonMat_Talent_T3; 
-        result.worldBossMat += talTable[i].worldBossMat; 
-        result.crown += talTable[i].crown; 
-        result.mora += talTable[i].mora; 
-      }
-      for(var j = Math.min(...this.requiredSkillTalents)-2; j < Math.max(...this.requiredSkillTalents)-1; j++)
-      {
-        result.book_T1 += talTable[j].book_T1;
-        result.book_T2 += talTable[j].book_T2;
-        result.book_T3 += talTable[j].book_T3; 
-        result.commonMat_Talent_T1 += talTable[j].commonMat_Talent_T1; 
-        result.commonMat_Talent_T2 += talTable[j].commonMat_Talent_T2; 
-        result.commonMat_Talent_T3 += talTable[j].commonMat_Talent_T3; 
-        result.worldBossMat += talTable[j].worldBossMat; 
-        result.crown += talTable[j].crown; 
-        result.mora += talTable[j].mora; 
-      }
-      for(var k = Math.min(...this.requiredSkillTalents)-2; k < Math.max(...this.requiredSkillTalents)-1; k++)
-      {
-        result.book_T1 += talTable[k].book_T1;
-        result.book_T2 += talTable[k].book_T2;
-        result.book_T3 += talTable[k].book_T3; 
-        result.commonMat_Talent_T1 += talTable[k].commonMat_Talent_T1; 
-        result.commonMat_Talent_T2 += talTable[k].commonMat_Talent_T2; 
-        result.commonMat_Talent_T3 += talTable[k].commonMat_Talent_T3; 
-        result.worldBossMat += talTable[k].worldBossMat; 
-        result.crown += talTable[k].crown; 
-        result.mora += talTable[k].mora; 
-      }
+      [this.requiredAtkTalents, this.requiredSkillTalents, this.requiredBurstTalents].forEach(req => {
+        for(var i = Math.min(...req)-2; i < Math.max(...req)-1; i++) {
+          Object.keys(result).forEach(function(key) {
+            result[key] += talTable[i][key];
+          });
+        }
+      });
       return result; 
     }, 
     tableItems: function() {
@@ -197,6 +168,8 @@ export default {
           if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
         });
       }); 
+      result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+      result.push({name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')}); 
       return result; 
     }
   }, 

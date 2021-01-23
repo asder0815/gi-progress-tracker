@@ -84,7 +84,10 @@ export default new Vuex.Store({
       {book_T1: 0, book_T2: 0, book_T3: 6, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 6, worldBossMat: 1, crown: 0, mora: 260000},
       {book_T1: 0, book_T2: 0, book_T3: 12, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 9, worldBossMat: 2, crown: 0, mora: 450000},
       {book_T1: 0, book_T2: 0, book_T3: 16, commonMat_T1: 0, commonMat_T2: 0, commonMat_T3: 12, worldBossMat: 2, crown: 1, mora: 700000}
-    ]
+    ], 
+    xpMaterials: {
+      character: {name: 'Hero’s Wit', amount: 20000}
+    }
   },
   mutations: {
     increaseCount(state) {
