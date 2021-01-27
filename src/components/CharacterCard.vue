@@ -72,6 +72,7 @@ export default {
     VueSlider
   },
   props: {
+    id: Number, 
     characterData: {
       type: Object, 
       required: true, 
@@ -163,6 +164,7 @@ export default {
       }); 
       if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
       if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')}); 
+      this.$store.commit('updateSummaryData', {id: this.id, data: result});
       return result; 
     }
   }, 

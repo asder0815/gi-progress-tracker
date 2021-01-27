@@ -87,11 +87,32 @@ export default new Vuex.Store({
     ], 
     xpMaterials: {
       character: {name: 'Hero’s Wit', amount: 20000}
-    }
+    }, 
+    summaryData: [], 
+    materialSummary: []
   },
   mutations: {
     increaseCount(state) {
       state.count++; 
+    }, 
+    updateSummaryData(state, summary) {
+      if(!state.summaryData.some(data => data.id === summary.id)) {
+        state.summaryData.push({id: summary.id, data: summary.data}); 
+      }
+      else {
+        state.summaryData.find(data => { return data.id === summary.id; }).data = summary.data; 
+      }
+      console.log(state.summaryData); 
+      /*var newSummary = []; 
+      state.summaryData.forEach(summary => {
+        summary.result.forEach(summaryData => {
+          if(newSummary.some(e => e.name === summaryData.name)) { 
+            newSummary.find(data => { return data.name === summaryData.name }).amount += summaryData.amount; 
+          }
+          else newSummary.push(summaryData);
+        }); 
+      });
+      state.materialSummary = newSummary; */
     }
   },
   actions: {

@@ -1,27 +1,13 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Projects
-        </h1>
-        <p class="subheading font-weight-regular">
-          Formerly Chuck's
-          <br>Please go back to your
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community.</a>
-        </p>
-      </v-col>
-    </v-row>
     <v-select v-model="characterName" :items="characterList"></v-select>
     <v-btn @click="addCharacter(characterName)">Add</v-btn>
       <character.comp
         v-for="(character, index) in characters"
         :key="index"
         :is="character.comp"
-        v-bind:characterData="character.characterData">
+        v-bind:characterData="character.characterData"
+        v-bind:id="character.id">
       </character.comp>
   </v-container>
 </template>
