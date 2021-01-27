@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="400" outlined>
+  <v-card class="mx-auto" max-width="500" outlined>
     <v-list-item three-line>
       <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
       <v-list-item-content>
@@ -9,31 +9,55 @@
     </v-list-item>
     <v-row>
       <v-col :cols="3">Level: </v-col>
-      <v-col :cols="9"><vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true" :drag-on-click="true"/></v-col>
+      <v-col :cols="90">
+        <vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true"/>
+      </v-col>
     </v-row>
+    <v-divider class="mx-4"></v-divider>
     <v-row>
       <v-col :cols="3">Ascension: </v-col>
-      <v-col :cols="9"><vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true" :drag-on-click="true"/></v-col>
+      <v-col :cols="9">
+        <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
+      </v-col>
     </v-row>
 
     <v-container class="grey lighten-5">
       <v-row no-gutters>
-        <v-col order="first" align="center">
-          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconAtk"></v-list-item-avatar>
-          <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+        <v-col order="first" align="center" cols="6" md="4">
+          <v-card>
+            <v-card-title>Attack</v-card-title>
+            <v-divider class="mx-4"></v-divider>
+            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconAtk"></v-list-item-avatar>
+            <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
+          </v-card>
         </v-col>
-        <v-col align="center">
-          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconSkill"></v-list-item-avatar>
-          <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+        <v-col align="center" cols="6" md="4">
+          <v-card>
+            <v-card-title>Skill</v-card-title>
+            <v-divider class="mx-4"></v-divider>
+            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconSkill"></v-list-item-avatar>
+            <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
+          </v-card>
         </v-col>
-        <v-col order="last" align="center">
-          <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconBurst"></v-list-item-avatar>
-          <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :drag-on-click="true"></vue-slider>
+        <v-col order="last" align="center" cols="6" md="4">
+          <v-card>
+            <v-card-title>Burst</v-card-title>
+            <v-divider class="mx-4"></v-divider>
+            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconBurst"></v-list-item-avatar>
+            <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-data-table :headers="headers" :items="tableItems" :items-per-page="10" class="elevation-1"></v-data-table>
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-data-table :headers="headers" :items="tableItems" :items-per-page="99" class="elevation-1"></v-data-table>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
 
   </v-card> 
 </template>
@@ -82,20 +106,26 @@ export default {
       return this.getRequired(this.burstLevel); 
     }, 
     summary_requiredXP: function() {
-      var xpTable = this.$store.state.xpTable;
-      var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
       var result = 0;
-      for(var i = range.start;  i < range.end; i++) {
-        result += xpTable[i].xp; 
+      var xpTable = this.$store.state.xpTable;
+      if(this.requiredLevels.length > 0)
+      {
+        var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
+        for(var i = range.start;  i < range.end; i++) {
+          result += xpTable[i].xp; 
+        }
+        return result; 
       }
-      return result; 
+      else return 0; 
     }, 
     summary_requiredMora: function() {
-      var xpTable = this.$store.state.xpTable;
-      var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
       var result = 0; 
-      for(var i = range.start;  i < range.end; i++) {
-        result += xpTable[i].mora; 
+      var xpTable = this.$store.state.xpTable;
+      if(this.requiredLevels.length > 0) {
+        var range = this.getLevelRange([this.requiredLevels[0]-1, this.requiredLevels[this.requiredLevels.length-1]]); 
+        for(var i = range.start;  i < range.end; i++) {
+          result += xpTable[i].mora; 
+        } 
       }
       result += this.summary_requiredAscensionMats.mora; 
       result += this.summary_requiredTalentMats.mora; 
@@ -131,8 +161,8 @@ export default {
           if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
         });
       }); 
-      result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
-      result.push({name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')}); 
+      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')}); 
       return result; 
     }
   }, 
