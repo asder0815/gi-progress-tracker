@@ -163,8 +163,10 @@ export default {
         });
       }); 
       if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
-      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')}); 
+      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
       this.$store.commit('updateSummaryData', {id: this.id, data: result});
+      var mora = result.find(obj => { return obj.name === 'Mora'})
+      if(mora) mora.amount = Number(this.summary_requiredMora).toLocaleString('de'); //TO-DO: check against null
       return result; 
     }
   }, 
