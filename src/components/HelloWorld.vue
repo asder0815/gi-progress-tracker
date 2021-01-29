@@ -44,7 +44,7 @@
       }, 
       tableItems: function() {
         var result = []; 
-        var storeData = this.$store.state.summaryData; 
+        var storeData = JSON.parse(JSON.stringify(this.$store.state.summaryData));
         storeData.forEach(summaryData => {
           summaryData.data.forEach(summary => {
             if(result.some(e => e.name === summary.name)) {
@@ -54,7 +54,7 @@
           }); 
         }); 
         var mora = result.find(obj => { return obj.name === 'Mora'}); 
-        if(mora) mora.amount = Number(mora.amount).toLocaleString('de');
+        if(mora) if(mora) mora = {name: 'Mora', icon: "WiP", amount: Number(mora.amount).toLocaleString('de')};
         return result;
       }
     },

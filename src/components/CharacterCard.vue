@@ -4,7 +4,7 @@
       <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">{{characterData.name}}</v-list-item-title>
-        <v-list-item-subtitle>{{characterData.description}}</v-list-item-subtitle>
+        <v-list-item-subtitle>{{id}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <v-row>
@@ -166,7 +166,7 @@ export default {
       if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
       this.$store.commit('updateSummaryData', {id: this.id, data: result});
       var mora = result.find(obj => { return obj.name === 'Mora'})
-      if(mora) mora.amount = Number(this.summary_requiredMora).toLocaleString('de'); //TO-DO: check against null
+      if(mora) mora = {name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')};
       return result; 
     }
   }, 
