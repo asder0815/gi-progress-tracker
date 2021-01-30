@@ -4,7 +4,19 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :items-per-page="99" class="elevation-1"></v-data-table>
+          <v-data-table :headers="headers" :items="tableItems" :items-per-page="99" class="elevation-1">
+
+            <template v-slot:item.current="props">
+              <v-edit-dialog :return-value.sync="props.item.current" large persistent>
+                <div>{{ props.item.current }}</div>
+                <template v-slot:input>
+                  <div class="mt-4 title"> Update Amount </div>
+                  <v-text-field v-model="currentItems[props.item.name]" label="Edit" single-line autofocus type="number"></v-text-field>
+                </template>
+              </v-edit-dialog>
+            </template>
+
+          </v-data-table>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -34,7 +46,13 @@
     data: () => ({
       characterName: "", 
       characters: [], 
-      headers: [{text: "Material", align: "start", value: "name"}, {text: "Icon", sortable: "false", value: "icon"}, {text: "Amount", value: "amount"}]
+      currentItems: {},
+      headers: [
+        {text: "Material", align: "start", value: "name"}, 
+        {text: "Icon", sortable: "false", value: "icon"}, 
+        {text: "Required:", value: "amount"}, 
+        {text: "Current:", value: "current"}, 
+        {text: "To Farm:", value: "farm"}]
     }),
     computed: {
       characterSelection: function() {
@@ -56,8 +74,12 @@
             else result.push(summary); 
           }); 
         }); 
-        var mora = result.find(obj => { return obj.name === 'Mora'}); 
-        if(mora) if(mora) mora = {name: 'Mora', icon: "WiP", amount: Number(mora.amount).toLocaleString('de')};
+        result.forEach(resultData => {
+          if(this.currentItems[resultData.name]) resultData.current = this.currentItems[resultData.name];
+          else resultData.current = 0; 
+          if(resultData.amount - resultData.current >= 0) resultData.farm = resultData.amount - resultData.current;
+          else resultData.farm = 0; 
+        });
         return result;
       }
     },
@@ -73,14 +95,23 @@
       onCharacterDelete: function(idToDelete, nameToDelete) {
         this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1); 
         localStorage.removeItem(nameToDelete); 
+      },
+      saveMaterialsToLocalStorage: function(materials) {
+        localStorage.currentMaterials = JSON.stringify(materials); 
       }
     }, 
+    watch: {
+      currentItems: function() {
+        this.saveMaterialsToLocalStorage(this.currentItems);
+      }
+    },
     mounted() {
       this.characterSelection.forEach(character => {
         if(localStorage[character]) {
           this.addCharacter(character); 
         }
       });
+      if(localStorage.currentMaterials) this.currentItems = JSON.parse(localStorage.currentMaterials); 
     }
   }
 </script>
