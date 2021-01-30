@@ -1,55 +1,59 @@
 <template>
+  <v-dialog v-model="dialog" width="500">
+    <template v-slot:activator="{ on, attrs }">
+      <v-card width="400" v-bind="attrs" v-on="on">
+        <v-list-item three-line>
+          <v-list-item-avatar tile size="100" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1" align="center">{{characterData.name}}</v-list-item-title>
+            <v-container>
+              <v-row align="center" justify="space-around">
+                <v-btn depressed @click.stop="enableCharacter(false)"> Disable </v-btn>
+                <v-btn depressed @click.stop="deleteCharacter()" color="error"> Delete </v-btn>
+              </v-row>
+            </v-container>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card>
+    </template>
+
   <v-card class="mx-auto" max-width="500" outlined>
     <v-list-item three-line>
-      <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
+      <v-list-item-avatar tile size="120" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">{{characterData.name}}</v-list-item-title>
-        <v-list-item-subtitle>{{id}}</v-list-item-subtitle>
+        <v-container>
+          <vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true"/>
+        </v-container>
+        <v-divider class="mx-4"></v-divider>
+        <v-container>
+          <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
+        </v-container>
       </v-list-item-content>
     </v-list-item>
-    <v-row>
-      <v-col :cols="3">Level: </v-col>
-      <v-col :cols="90">
-        <vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true"/>
-      </v-col>
-    </v-row>
     <v-divider class="mx-4"></v-divider>
-    <v-row>
-      <v-col :cols="3">Ascension: </v-col>
-      <v-col :cols="9">
-        <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
-      </v-col>
-    </v-row>
-
-    <v-container class="grey lighten-5">
+    <v-container>
       <v-row no-gutters>
         <v-col order="first" align="center" cols="6" md="4">
-          <v-card>
-            <v-card-title>Attack</v-card-title>
-            <v-divider class="mx-4"></v-divider>
-            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconAtk"></v-list-item-avatar>
-            <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
-          </v-card>
+            <v-img :src="characterData.iconAtk" :max-height="120" :max-width="120"></v-img>
+            <v-container>
+              <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+            </v-container>
         </v-col>
         <v-col align="center" cols="6" md="4">
-          <v-card>
-            <v-card-title>Skill</v-card-title>
-            <v-divider class="mx-4"></v-divider>
-            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconSkill"></v-list-item-avatar>
-            <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
-          </v-card>
+            <v-img :src="characterData.iconSkill" :max-height="120" :max-width="120"></v-img>
+            <v-container>
+              <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+            </v-container>
         </v-col>
         <v-col order="last" align="center" cols="6" md="4">
-          <v-card>
-            <v-card-title>Burst</v-card-title>
-            <v-divider class="mx-4"></v-divider>
-            <v-list-item-avatar tile size="80" color="grey"><img :src="characterData.iconBurst"></v-list-item-avatar>
-            <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]"></vue-slider>
-          </v-card>
+            <v-img :src="characterData.iconSkill" :max-height="120" :max-width="120"></v-img>
+            <v-container>
+              <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+            </v-container>
         </v-col>
       </v-row>
     </v-container>
-
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
@@ -58,8 +62,10 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-
   </v-card> 
+
+  </v-dialog>
+
 </template>
 
 <script>
@@ -82,6 +88,7 @@ export default {
     }
   },
   data: () => ({
+    dialog: false,
     level: [0, 90], 
     ascension: [0, 6],
     atkLevel: [1, 10],
@@ -181,6 +188,12 @@ export default {
     getLevelRange: function(array) {
       var dict = [{v: 0, i:0},{v: 20, i: 1},{v: 40, i: 2},{v: 50, i: 3},{v: 60, i: 4},{v: 70, i: 5},{v: 80, i: 6},{v: 90, i:7}]; 
       return {start: dict.find(obj => { return obj.v === array[0]; }).i, end: dict.find(obj => { return obj.v === array[1]; }).i}; 
+    }, 
+    enableCharacter: function(enable) {
+      console.log("Toggle character card:" + enable); 
+    }, 
+    deleteCharacter: function() {
+      console.log("Deleting character card.");
     }
   }
 }

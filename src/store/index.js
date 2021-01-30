@@ -34,9 +34,9 @@ export default new Vuex.Store({
       { 
         name: 'Rosaria', 
         picture: require('@/assets/character_portraits/rosaria.png'), 
-        iconAtk: require('@/assets/talent_icons/rosaria_atk.jpg'), 
-        iconSkill: require('@/assets/talent_icons/rosaria_skill.jpg'), 
-        iconBurst: require('@/assets/talent_icons/rosaria_burst.jpg'),
+        iconAtk: require('@/assets/talent_icons/rosaria_atk.png'), 
+        iconSkill: require('@/assets/talent_icons/rosaria_skill.png'), 
+        iconBurst: require('@/assets/talent_icons/rosaria_burst.png'),
         elementalMat_T1: C.materials.ice_crystal_T1, 
         elementalMat_T2: C.materials.ice_crystal_T2, 
         elementalMat_T3: C.materials.ice_crystal_T3, 
