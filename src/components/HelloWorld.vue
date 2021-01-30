@@ -8,15 +8,17 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <v-select v-model="characterName" :items="characterSelection"></v-select>
-    <v-btn @click="addCharacter(characterName)">Add</v-btn>
+    <v-row align="center" justify="space-around">
+      <v-select v-model="characterName" :items="characterSelection"></v-select>
+      <v-btn @click="addCharacter(characterName)">Add</v-btn>
+    </v-row>
       <character.comp
         v-for="(character, index) in characters"
         :key="index"
         :is="character.comp"
         v-bind:characterData="character.characterData"
         v-bind:id="character.id"
-        @delete="onCharacterDelete(character.id)">
+        @delete="onCharacterDelete(character.id, character.characterData.name)">
       </character.comp>
   </v-container>
 </template>
@@ -68,9 +70,17 @@
           comp: CharacterCard
         }); 
       }, 
-      onCharacterDelete: function(idToDelete) {
-        this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1)
+      onCharacterDelete: function(idToDelete, nameToDelete) {
+        this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1); 
+        localStorage.removeItem(nameToDelete); 
       }
+    }, 
+    mounted() {
+      this.characterSelection.forEach(character => {
+        if(localStorage[character]) {
+          this.addCharacter(character); 
+        }
+      });
     }
   }
 </script>

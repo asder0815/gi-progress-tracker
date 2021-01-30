@@ -188,7 +188,8 @@ export default {
       }); 
       if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
       if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
-      this.$store.commit('updateSummaryData', {id: this.id, data: result});
+      if(!this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: result});
+      else this.$store.commit('updateSummaryData', {id: this.id, data: []});
       return result; 
     },
     enableCharacter: function(enable) {
@@ -199,7 +200,38 @@ export default {
     deleteCharacter: function() {
       this.$store.commit('updateSummaryData', {id: this.id, data: []});
       this.$emit('delete'); 
+    }, 
+    saveToLocalStorage: function() {
+      var charData = {
+        name: this.characterData.name, 
+        level: this.level, 
+        ascension: this.ascension, 
+        atkLevel: this.atkLevel, 
+        skillLevel: this.skillLevel, 
+        burstLevel: this.burstLevel,
+        disabled: this.disabled}; 
+      localStorage[this.characterData.name] = JSON.stringify(charData); 
     }
+  }, 
+  mounted() {
+    if(localStorage[this.characterData.name]) {
+      var storageData = JSON.parse(localStorage[this.characterData.name]); 
+      this.level = storageData.level; 
+      this.ascension = storageData.ascension; 
+      this.atkLevel = storageData.atkLevel; 
+      this.skillLevel = storageData.skillLevel; 
+      this.burstLevel = storageData.burstLevel; 
+      this.disabled = storageData.disabled; 
+    }
+    else this.saveToLocalStorage(); 
+  }, 
+  watch: {
+    level() { this.saveToLocalStorage(); }, 
+    ascension() { this.saveToLocalStorage(); }, 
+    atkLevel() { this.saveToLocalStorage(); }, 
+    skillLevel() { this.saveToLocalStorage(); },
+    burstLevel() { this.saveToLocalStorage(); },
+    disabled() { this.saveToLocalStorage(); }
   }
 }
 </script>
