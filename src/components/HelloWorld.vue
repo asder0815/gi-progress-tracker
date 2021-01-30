@@ -8,14 +8,15 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <v-select v-model="characterName" :items="characterList"></v-select>
+    <v-select v-model="characterName" :items="characterSelection"></v-select>
     <v-btn @click="addCharacter(characterName)">Add</v-btn>
       <character.comp
         v-for="(character, index) in characters"
         :key="index"
         :is="character.comp"
         v-bind:characterData="character.characterData"
-        v-bind:id="character.id">
+        v-bind:id="character.id"
+        @delete="onCharacterDelete(character.id)">
       </character.comp>
   </v-container>
 </template>
@@ -34,7 +35,7 @@
       headers: [{text: "Material", align: "start", value: "name"}, {text: "Icon", sortable: "false", value: "icon"}, {text: "Amount", value: "amount"}]
     }),
     computed: {
-      characterList: function() {
+      characterSelection: function() {
         var chars = this.$store.state.characters; 
         var result = []; 
         chars.forEach(char => {
@@ -66,6 +67,9 @@
           characterData: this.$store.state.characters.find(obj => { return obj.name === newCharName }),
           comp: CharacterCard
         }); 
+      }, 
+      onCharacterDelete: function(idToDelete) {
+        this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1)
       }
     }
   }

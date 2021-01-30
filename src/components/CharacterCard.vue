@@ -197,7 +197,8 @@ export default {
       else this.getTableItems(); 
     }, 
     deleteCharacter: function() {
-      console.log("Deleting character card.");
+      this.$store.commit('updateSummaryData', {id: this.id, data: []});
+      this.$emit('delete'); 
     }
   }
 }
