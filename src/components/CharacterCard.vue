@@ -8,7 +8,7 @@
             <v-list-item-title class="headline mb-1" align="center">{{characterData.name}}</v-list-item-title>
             <v-container>
               <v-row align="center" justify="space-around">
-                <v-btn depressed @click.stop="enableCharacter(false)"> Disable </v-btn>
+                <v-btn depressed @click.stop="enableCharacter(!disabled)">{{disabled ? "Enable" : "Disable"}}</v-btn>
                 <v-btn depressed @click.stop="deleteCharacter()" color="error"> Delete </v-btn>
               </v-row>
             </v-container>
@@ -89,6 +89,7 @@ export default {
   },
   data: () => ({
     dialog: false,
+    disabled: false, 
     level: [0, 90], 
     ascension: [0, 6],
     atkLevel: [1, 10],
@@ -162,19 +163,7 @@ export default {
       return result; 
     }, 
     tableItems: function() {
-      var result = []; 
-      var data = this.characterData; 
-      [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
-        Object.keys(summary).forEach(function(key) {
-          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
-        });
-      }); 
-      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
-      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
-      this.$store.commit('updateSummaryData', {id: this.id, data: result});
-      var mora = result.find(obj => { return obj.name === 'Mora'})
-      if(mora) mora = {name: 'Mora', icon: "WiP", amount: Number(this.summary_requiredMora).toLocaleString('de')};
-      return result; 
+      return this.getTableItems(); 
     }
   }, 
   methods: {
@@ -189,8 +178,23 @@ export default {
       var dict = [{v: 0, i:0},{v: 20, i: 1},{v: 40, i: 2},{v: 50, i: 3},{v: 60, i: 4},{v: 70, i: 5},{v: 80, i: 6},{v: 90, i:7}]; 
       return {start: dict.find(obj => { return obj.v === array[0]; }).i, end: dict.find(obj => { return obj.v === array[1]; }).i}; 
     }, 
+    getTableItems: function() {
+      var result = []; 
+      var data = this.characterData; 
+      [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
+        Object.keys(summary).forEach(function(key) {
+          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
+        });
+      }); 
+      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
+      this.$store.commit('updateSummaryData', {id: this.id, data: result});
+      return result; 
+    },
     enableCharacter: function(enable) {
-      console.log("Toggle character card:" + enable); 
+      this.disabled = enable; 
+      if(this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: []});
+      else this.getTableItems(); 
     }, 
     deleteCharacter: function() {
       console.log("Deleting character card.");
