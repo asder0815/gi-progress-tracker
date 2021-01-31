@@ -58,7 +58,7 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :items-per-page="99" class="elevation-1"></v-data-table>
+          <v-data-table :headers="headers" :items="tableItems" :disable-sort="true" :disable-pagination="true" :hide-default-footer="true" class="elevation-1"></v-data-table>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
