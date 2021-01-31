@@ -4,14 +4,14 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :items-per-page="99" class="elevation-1">
+          <v-data-table :headers="headers" :items="tableItems" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
 
             <template v-slot:item.current="props">
-              <v-edit-dialog :return-value.sync="props.item.current" large persistent>
+              <v-edit-dialog :return-value.sync="props.item.current" large :key="hackCounter" @open="materialDialogOpen(currentItems[props.item.name] ? currentItems[props.item.name] : 0)" @save="materialDialogSave(props.item.name)">
                 <div>{{ props.item.current }}</div>
                 <template v-slot:input>
-                  <div class="mt-4 title"> Update Amount </div>
-                  <v-text-field v-model="currentItems[props.item.name]" label="Edit" single-line autofocus type="number"></v-text-field>
+                  <div class="mt-4 title"> {{ props.item.name }} </div>
+                  <v-text-field v-model="dialogSelection" label="Edit" single-line autofocus type="number"></v-text-field>
                 </template>
               </v-edit-dialog>
             </template>
@@ -52,7 +52,9 @@
         {text: "Icon", sortable: "false", value: "icon"}, 
         {text: "Required:", value: "amount"}, 
         {text: "Current:", value: "current"}, 
-        {text: "To Farm:", value: "farm"}]
+        {text: "To Farm:", value: "farm"}], 
+        dialogSelection: 0, 
+        hackCounter: 0
     }),
     computed: {
       characterSelection: function() {
@@ -64,6 +66,8 @@
         return result; 
       }, 
       tableItems: function() {
+        this.hackCounter; 
+        console.log("Amount of unnecessary counts required to hack around computed properties not updating correctly: " + this.hackCounter); 
         var result = []; 
         var storeData = JSON.parse(JSON.stringify(this.$store.state.summaryData));
         storeData.forEach(summaryData => {
@@ -76,7 +80,10 @@
         }); 
         result.forEach(resultData => {
           if(this.currentItems[resultData.name]) resultData.current = this.currentItems[resultData.name];
-          else resultData.current = 0; 
+          else {
+            this.currentItems[resultData.name] = 0; 
+            resultData.current = this.currentItems[resultData.name];
+          }
           if(resultData.amount - resultData.current >= 0) resultData.farm = resultData.amount - resultData.current;
           else resultData.farm = 0; 
         });
@@ -98,6 +105,17 @@
       },
       saveMaterialsToLocalStorage: function(materials) {
         localStorage.currentMaterials = JSON.stringify(materials); 
+      }, 
+      materialDialogOpen(currentAmount) {
+        this.dialogSelection = currentAmount; 
+      }, 
+      materialDialogSave(materialName) {
+        this.currentItems[materialName] = this.dialogSelection, 10; 
+        this.saveMaterialsToLocalStorage(this.currentItems); 
+        this.recompute(); 
+      }, 
+      recompute() {
+        this.hackCounter++; 
       }
     }, 
     watch: {
