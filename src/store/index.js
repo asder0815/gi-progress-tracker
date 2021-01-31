@@ -5,6 +5,8 @@ Vue.use(Vuex)
 
 const C = {
   materials: {
+    mora: {name: 'Mora', icon: require('@/assets/material_icons/Mora.png')},
+    experience: {name: "Hero's Wit", icon: require("@/assets/material_icons/Item_Hero's_Wit.webp")},
     crown: {name: 'Crown of Insight', icon: require('@/assets/material_icons/Item_Crown_of_Insight.webp')}, 
     ice_crystal_T1: {name: 'Shivada Jade Sliver', icon: require('@/assets/material_icons/Item_Shivada_Jade_Sliver.webp')}, 
     ice_crystal_T2: {name: 'Shivada Jade Fragment', icon: require('@/assets/material_icons/Item_Shivada_Jade_Fragment.webp')}, 
@@ -88,6 +90,7 @@ export default new Vuex.Store({
     xpMaterials: {
       character: {name: 'Hero’s Wit', amount: 20000}
     }, 
+    materialList: C,
     summaryData: []
   },
   mutations: {

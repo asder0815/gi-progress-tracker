@@ -5,12 +5,16 @@
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-data-table :headers="headers" :items="tableItems" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
+            
+            <template v-slot:item.icon="cell">
+              <v-img :src="cell.item.icon" :max-width="50" :max-height="50"></v-img>
+            </template>
 
-            <template v-slot:item.current="props">
-              <v-edit-dialog :return-value.sync="props.item.current" large :key="hackCounter" @open="materialDialogOpen(currentItems[props.item.name] ? currentItems[props.item.name] : 0)" @save="materialDialogSave(props.item.name)">
-                <div>{{ props.item.current }}</div>
+            <template v-slot:item.current="cell">
+              <v-edit-dialog :return-value.sync="cell.item.current" large :key="hackCounter" @open="materialDialogOpen(currentItems[cell.item.name] ? currentItems[cell.item.name] : 0)" @save="materialDialogSave(cell.item.name)">
+                <div>{{ cell.item.current }}</div>
                 <template v-slot:input>
-                  <div class="mt-4 title"> {{ props.item.name }} </div>
+                  <div class="mt-4 title"> {{ cell.item.name }} </div>
                   <v-text-field v-model="dialogSelection" label="Edit" single-line autofocus type="number"></v-text-field>
                 </template>
               </v-edit-dialog>
@@ -70,6 +74,8 @@
         console.log("Amount of unnecessary counts required to hack around computed properties not updating correctly: " + this.hackCounter); 
         var result = []; 
         var storeData = JSON.parse(JSON.stringify(this.$store.state.summaryData));
+        console.log("Store data"); 
+        console.log(storeData); 
         storeData.forEach(summaryData => {
           summaryData.data.forEach(summary => {
             if(result.some(e => e.name === summary.name)) {
@@ -87,6 +93,8 @@
           if(resultData.amount - resultData.current >= 0) resultData.farm = resultData.amount - resultData.current;
           else resultData.farm = 0; 
         });
+        console.log("Result"); 
+        console.log(result); 
         return result;
       }
     },

@@ -58,7 +58,11 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :disable-sort="true" :disable-pagination="true" :hide-default-footer="true" class="elevation-1"></v-data-table>
+          <v-data-table :headers="headers" :items="tableItems" :disable-sort="true" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
+            <template v-slot:item.icon="cell">
+              <v-img :src="cell.item.icon" :max-width="40" :max-height="40"></v-img>
+            </template>
+          </v-data-table>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -183,11 +187,11 @@ export default {
       var data = this.characterData; 
       [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
         Object.keys(summary).forEach(function(key) {
-          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: "WiP", amount: summary[key]}); 
+          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: data[key].icon, amount: summary[key]}); 
         });
       }); 
-      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: "WiP", amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
-      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: "WiP", amount: this.summary_requiredMora}); 
+      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: this.$store.state.materialList.materials.experience.icon, amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: this.$store.state.materialList.materials.mora.icon, amount: this.summary_requiredMora}); 
       if(!this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: result});
       else this.$store.commit('updateSummaryData', {id: this.id, data: []});
       return result; 
