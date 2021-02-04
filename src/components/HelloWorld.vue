@@ -4,12 +4,12 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
-            
+          <v-switch v-model="filterEnabled" inset :label='"Hide completed"'></v-switch>
+          <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+          <v-data-table :headers="headers" :items="tableItems" :search="customFilter" :custom-filter="filterCompleted" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
             <template v-slot:item.icon="cell">
               <v-img :src="cell.item.icon" :max-width="50" :max-height="50"></v-img>
             </template>
-
             <template v-slot:item.current="cell">
               <v-edit-dialog :return-value.sync="cell.item.current" large :key="hackCounter" @open="materialDialogOpen(currentItems[cell.item.name] ? currentItems[cell.item.name] : 0)" @save="materialDialogSave(cell.item.name)">
                 <div>{{ cell.item.current }}</div>
@@ -58,6 +58,8 @@
         {text: "Current:", value: "current"}, 
         {text: "To Farm:", value: "farm"}], 
         dialogSelection: 0, 
+        search: "",
+        filterEnabled: false,
         hackCounter: 0
     }),
     computed: {
@@ -74,8 +76,6 @@
         console.log("Amount of unnecessary counts required to hack around computed properties not updating correctly: " + this.hackCounter); 
         var result = []; 
         var storeData = JSON.parse(JSON.stringify(this.$store.state.summaryData));
-        console.log("Store data"); 
-        console.log(storeData); 
         storeData.forEach(summaryData => {
           summaryData.data.forEach(summary => {
             if(result.some(e => e.name === summary.name)) {
@@ -93,9 +93,11 @@
           if(resultData.amount - resultData.current >= 0) resultData.farm = resultData.amount - resultData.current;
           else resultData.farm = 0; 
         });
-        console.log("Result"); 
-        console.log(result); 
         return result;
+      }, 
+      customFilter: function() { 
+        return JSON.stringify({hide: this.filterEnabled, search: this.search}); 
+
       }
     },
     methods: {
@@ -122,6 +124,15 @@
         this.saveMaterialsToLocalStorage(this.currentItems); 
         this.recompute(); 
       }, 
+      filterCompleted(value, search, item) {
+        if(value == null) return false; 
+        var cf = JSON.parse(search);
+        if(cf.search == "" || item.name.toLowerCase().includes(cf.search)) {
+          if(!cf.hide) return true; 
+          else return item.farm > 0; 
+        }
+        else return false; 
+      },
       recompute() {
         this.hackCounter++; 
       }
