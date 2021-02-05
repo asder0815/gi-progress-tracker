@@ -1,38 +1,41 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
-    <template v-slot:activator="{ on, attrs }">
-      <v-card width="400" v-bind="attrs" v-on="on" class="ma-2">
-        <v-list-item three-line>
-          <v-list-item-avatar tile size="100" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title class="headline mb-1" align="center">{{characterData.name}}</v-list-item-title>
+  <v-card class="ma-3" max-width="500" outlined>
+    <v-container class="mb-3">
+      <v-row class="mt-1 mx-1">
+        <v-col cols="3">
+          <v-row justify="center">
+            <v-img :src="characterData.picture" max-height="120" max-width="120" class="mb-2"/>
+          </v-row>
+          <v-row justify="center">
+            <v-btn depressed block @click.stop="enableCharacter(!disabled)" class="mb-2">{{disabled ? "Enable" : "Disable"}}</v-btn>
+          </v-row>
+          <v-row justify="center">
+            <v-btn depressed block @click.stop="deleteCharacter()" color="error"> Delete </v-btn>
+          </v-row>
+        </v-col>
+        <v-col cols="9">
+          <v-row>
+            <v-card-title primary-title class="justify-center">
+              <div><h1>{{characterData.name}}</h1></div>
+            </v-card-title>
+          </v-row>
+          <v-row>
             <v-container>
-              <v-row align="center" justify="space-around">
-                <v-btn depressed @click.stop="enableCharacter(!disabled)">{{disabled ? "Enable" : "Disable"}}</v-btn>
-                <v-btn depressed @click.stop="deleteCharacter()" color="error"> Delete </v-btn>
-              </v-row>
+              Level:
+              <vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true" class="mb-1"/>
             </v-container>
-          </v-list-item-content>
-        </v-list-item>
-      </v-card>
-    </template>
-
-  <v-card class="mx-auto" max-width="500" outlined>
-    <v-list-item three-line>
-      <v-list-item-avatar tile size="120" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="headline mb-1">{{characterData.name}}</v-list-item-title>
-        <v-container>
-          <vue-slider v-model="level" :label="labels.level" :max="90" :marks="[0, 20, 40, 50, 60, 70, 80, 90]" :included="true" :contained="true"/>
-        </v-container>
-        <v-divider class="mx-4"></v-divider>
-        <v-container>
-          <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
-        </v-container>
-      </v-list-item-content>
-    </v-list-item>
-    <v-divider class="mx-4"></v-divider>
-    <v-container>
+          </v-row>
+          <v-row>
+            <v-container>
+              Ascension:
+              <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
+            </v-container>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-divider h1 class="mx-4"></v-divider>
+    <v-container class="mb-2">
       <v-row no-gutters>
         <v-col order="first" align="center" cols="6" md="4">
             <v-img :src="characterData.iconAtk" :max-height="120" :max-width="120"></v-img>
@@ -54,22 +57,19 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-expansion-panels>
-      <v-expansion-panel>
-        <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-data-table :headers="headers" :items="tableItems" :disable-sort="true" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
-            <template v-slot:item.icon="cell">
-              <v-img :src="cell.item.icon" :max-width="40" :max-height="40"></v-img>
-            </template>
-          </v-data-table>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <v-dialog v-model="dialog" width="500">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn v-bind="attrs" v-on="on" depressed block> View Required Materials </v-btn>
+      </template>
+      <v-card>
+        <v-data-table :headers="headers" :items="tableItems" :disable-sort="true" :disable-pagination="true" :hide-default-footer="true" class="elevation-1">
+          <template v-slot:item.icon="cell">
+            <v-img :src="cell.item.icon" :max-width="40" :max-height="40"></v-img>
+          </template>
+        </v-data-table>
+      </v-card>
+    </v-dialog>
   </v-card> 
-
-  </v-dialog>
-
 </template>
 
 <script>
