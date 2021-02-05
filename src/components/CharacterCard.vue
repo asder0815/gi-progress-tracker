@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
-      <v-card width="400" v-bind="attrs" v-on="on">
+      <v-card width="400" v-bind="attrs" v-on="on" class="ma-2">
         <v-list-item three-line>
           <v-list-item-avatar tile size="100" color="grey"><img :src="characterData.picture"></v-list-item-avatar>
           <v-list-item-content>

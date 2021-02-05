@@ -28,14 +28,18 @@
       <v-select v-model="characterName" :items="characterSelection"></v-select>
       <v-btn @click="addCharacter(characterName)">Add</v-btn>
     </v-row>
-      <character.comp
-        v-for="(character, index) in characters"
-        :key="index"
-        :is="character.comp"
-        v-bind:characterData="character.characterData"
-        v-bind:id="character.id"
-        @delete="onCharacterDelete(character.id, character.characterData.name)">
-      </character.comp>
+    <v-container grid-list-md fluid>
+      <v-layout row wrap>
+        <character.comp
+          v-for="(character, index) in characters"
+          :key="index"
+          :is="character.comp"
+          v-bind:characterData="character.characterData"
+          v-bind:id="character.id"
+          @delete="onCharacterDelete(character.id, character.characterData.name)">
+        </character.comp>
+      </v-layout>
+    </v-container>
   </v-container>
 </template>
 
