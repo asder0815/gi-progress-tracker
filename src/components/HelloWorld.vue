@@ -29,7 +29,7 @@
       <v-btn @click="addCharacter(characterName)">Add</v-btn>
     </v-row>
     <v-container grid-list-md fluid>
-      <v-layout row wrap>
+      <v-layout align-center justify-center row wrap>
         <character.comp
           v-for="(character, index) in characters"
           :key="index"
