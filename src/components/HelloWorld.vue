@@ -24,8 +24,8 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-    <v-row align="center" justify="space-around">
-      <v-select v-model="characterName" :items="characterSelection"></v-select>
+    <v-row align="center" justify="space-around" class="mt-5">
+      <v-select v-model="characterName" :items="characterSelection" label="Add new project" class="mr-3"></v-select>
       <v-btn @click="addCharacter(characterName)">Add</v-btn>
     </v-row>
     <v-layout align-center justify-center row wrap>
@@ -69,7 +69,7 @@
         var chars = this.$store.state.characters; 
         var result = []; 
         chars.forEach(char => {
-          result.push(char.name); 
+          if(this.characters.find(obj => { return obj.characterData.name ==  char.name}) == undefined) result.push(char.name); 
         });
         return result; 
       }, 
@@ -110,6 +110,7 @@
           characterData: this.$store.state.characters.find(obj => { return obj.name === newCharName }),
           comp: CharacterCard
         }); 
+        this.characterName = ""; 
       }, 
       onCharacterDelete: function(idToDelete, nameToDelete) {
         this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1); 
