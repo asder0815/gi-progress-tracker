@@ -69,6 +69,9 @@
         </v-data-table>
       </v-card>
     </v-dialog>
+    <v-overlay :absolute="true" :opacity="0.9" :value="overlay" >
+      <v-btn color="green" @click="enableCharacter(!disabled)" block>Enable</v-btn>
+    </v-overlay>
   </v-card> 
 </template>
 
@@ -94,6 +97,7 @@ export default {
   data: () => ({
     dialog: false,
     disabled: false, 
+    overlay: false, 
     level: [0, 90], 
     ascension: [0, 6],
     atkLevel: [1, 10],
@@ -198,6 +202,7 @@ export default {
     },
     enableCharacter: function(enable) {
       this.disabled = enable; 
+      this.overlay = enable; 
       if(this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: []});
       else this.getTableItems(); 
     }, 
