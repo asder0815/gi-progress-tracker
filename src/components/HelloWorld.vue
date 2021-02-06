@@ -26,7 +26,7 @@
     </v-expansion-panels>
     <v-row align="center" justify="space-around" class="mt-5">
       <v-select v-model="characterName" :items="characterSelection" label="Add new project" class="mr-3"></v-select>
-      <v-btn @click="addCharacter(characterName)">Add</v-btn>
+      <v-btn @click="addCharacter(characterName)" :disabled="this.characterName==''">Add</v-btn>
     </v-row>
     <v-layout align-center justify-center row wrap>
       <character.comp
