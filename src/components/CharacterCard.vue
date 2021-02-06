@@ -50,7 +50,7 @@
             </v-container>
         </v-col>
         <v-col order="last" align="center" cols="6" md="4">
-            <v-img :src="characterData.iconSkill" :max-height="90" :max-width="90"></v-img>
+            <v-img :src="characterData.iconBurst" :max-height="90" :max-width="90"></v-img>
             <v-container>
               <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="90"></vue-slider>
             </v-container>

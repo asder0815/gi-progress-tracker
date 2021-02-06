@@ -115,7 +115,7 @@ export default new Vuex.Store({
         iconAtk: require('@/assets/talent_icons/mona_atk.png'), 
         iconSkill: require('@/assets/talent_icons/mona_skill.png'), 
         iconBurst: require('@/assets/talent_icons/mona_burst.png'),
-        elementalMat_T1: C.materials.water_crystal_T2,
+        elementalMat_T1: C.materials.water_crystal_T1,
         elementalMat_T2: C.materials.water_crystal_T2, 
         elementalMat_T3: C.materials.water_crystal_T3, 
         elementalMat_T4: C.materials.water_crystal_T4, 
