@@ -1,10 +1,10 @@
 <template>
-  <v-card class="ma-3" max-width="500" outlined>
+  <v-card class="ma-3" max-width="400" outlined>
     <v-container class="mb-3">
       <v-row class="mt-1 mx-1">
         <v-col cols="3">
           <v-row justify="center">
-            <v-img :src="characterData.picture" max-height="120" max-width="120" class="mb-2"/>
+            <v-img :src="characterData.picture" max-height="90" max-width="90" class="mb-2"/>
           </v-row>
           <v-row justify="center">
             <v-btn depressed block @click.stop="enableCharacter(!disabled)" class="mb-2">{{disabled ? "Enable" : "Disable"}}</v-btn>
@@ -15,8 +15,8 @@
         </v-col>
         <v-col cols="9">
           <v-row>
-            <v-card-title primary-title class="justify-center">
-              <div><h1>{{characterData.name}}</h1></div>
+            <v-card-title primary-title class="justify-center my-n3">
+              <h2>{{characterData.name}}</h2>
             </v-card-title>
           </v-row>
           <v-row>
@@ -38,21 +38,21 @@
     <v-container class="mb-2">
       <v-row no-gutters>
         <v-col order="first" align="center" cols="6" md="4">
-            <v-img :src="characterData.iconAtk" :max-height="120" :max-width="120"></v-img>
+            <v-img :src="characterData.iconAtk" :max-height="90" :max-width="90"></v-img>
             <v-container>
-              <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+              <vue-slider v-model="atkLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="90"></vue-slider>
             </v-container>
         </v-col>
         <v-col align="center" cols="6" md="4">
-            <v-img :src="characterData.iconSkill" :max-height="120" :max-width="120"></v-img>
+            <v-img :src="characterData.iconSkill" :max-height="90" :max-width="90"></v-img>
             <v-container>
-              <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+              <vue-slider v-model="skillLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="90"></vue-slider>
             </v-container>
         </v-col>
         <v-col order="last" align="center" cols="6" md="4">
-            <v-img :src="characterData.iconSkill" :max-height="120" :max-width="120"></v-img>
+            <v-img :src="characterData.iconSkill" :max-height="90" :max-width="90"></v-img>
             <v-container>
-              <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="120"></vue-slider>
+              <vue-slider v-model="burstLevel" :min="1" :max="10" :contained="true" :marks="[2, 6, 9]" :width="90"></vue-slider>
             </v-container>
         </v-col>
       </v-row>
