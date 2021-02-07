@@ -231,6 +231,7 @@ export default {
       this.skillLevel = storageData.skillLevel; 
       this.burstLevel = storageData.burstLevel; 
       this.disabled = storageData.disabled; 
+      this.overlay = storageData.disabled; 
     }
     else this.saveToLocalStorage(); 
   }, 
