@@ -20,6 +20,7 @@
             :items="tableItems" 
             :search="customFilter" 
             :custom-filter="filterCompleted" 
+            :custom-sort="customSort"
             :disable-pagination="true" 
             :hide-default-footer="true" 
             :item-class="tableBackground"
@@ -97,6 +98,13 @@
         dialogSelection: 0, 
         search: "",
         filterEnabled: false,
+        sorting: {
+          default: {desc: undefined, asc: undefined},
+          icon: {desc: undefined, asc: undefined}, 
+          amount: {desc: undefined, asc: undefined}, 
+          current: {desc: undefined, asc: undefined}, 
+          farm: {desc: this.sortFarmDesc, asc: this.sortFarmAsc}
+        },
         hackCounter: 0
     }),
     computed: {
@@ -179,8 +187,30 @@
         else return item.current / item.amount; 
       },
       tableBackground(item) {
-        console.log(item.name +" Req: " + item.amount + "; Current: " + item.current + " => " +  this.getNormalizedProgress(item) * 100); 
         return 'styleProgress-' + Math.round((this.getNormalizedProgress(item) * 100)); 
+      }, 
+      customSort(items, index, isDesc) { 
+        console.log("Index:");
+        console.log(index);
+        console.log("desc? " + isDesc);  
+        if(index.length == 1) {
+          return isDesc ? items.sort(this.sorting[index[0]].asc) : items.sort(this.sorting[[0]].desc); 
+        }
+        else return isDesc ? items.sort(this.sorting.default.desc) : items.sort(this.sorting.default.asc); 
+      }, 
+      sortFarmDesc: function(a, b) {
+        var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
+        var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
+        if(prog_a < prog_b) return -1; 
+        else if(prog_a > prog_b) return 1; 
+        else return 0; 
+      }, 
+      sortFarmAsc: function(a, b) {
+        var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
+        var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
+        if(prog_b < prog_a) return -1; 
+        else if(prog_b > prog_a) return 1; 
+        else return 0; 
       }
     }, 
     watch: {
