@@ -98,13 +98,14 @@
         dialogSelection: 0, 
         search: "",
         filterEnabled: false,
-        sorting: {
-          default: {desc: undefined, asc: undefined},
-          icon: {desc: undefined, asc: undefined}, 
-          amount: {desc: undefined, asc: undefined}, 
-          current: {desc: undefined, asc: undefined}, 
+        /*sorting: {
+          default: {desc: this.sortNameDesc, asc: this.sortNameAsc},
+          name: {desc: this.sortNameDesc, asc: this.sortNameAsc},
+          icon: {desc: this.sortNameDesc, asc: this.sortNameAsc}, 
+          amount: {desc: this.sortReqDesc, asc: this.sortReqAsc}, 
+          current: {desc: this.sortHaveDesc, asc: this.sortHaveAsc}, 
           farm: {desc: this.sortFarmDesc, asc: this.sortFarmAsc}
-        },
+        },*/
         hackCounter: 0
     }),
     computed: {
@@ -192,25 +193,68 @@
       customSort(items, index, isDesc) { 
         console.log("Index:");
         console.log(index);
-        console.log("desc? " + isDesc);  
-        if(index.length == 1) {
+        console.log(isDesc);  
+        /*if(index.length == 1) {
           return isDesc ? items.sort(this.sorting[index[0]].asc) : items.sort(this.sorting[[0]].desc); 
         }
-        else return isDesc ? items.sort(this.sorting.default.desc) : items.sort(this.sorting.default.asc); 
+        else return isDesc ? items.sort(this.sorting.default.desc) : items.sort(this.sorting.default.asc); */
+        if(index.length == 1 && isDesc.length == 1) {
+          var isDescending = isDesc[0];
+          if(index[0] == "name") {
+            if(isDescending) return items.sort(this.sortNameDesc); 
+            if(!isDescending) return items.sort(this.sortNameAsc); 
+          }//return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
+          if(index[0] == "icon") {
+            if(isDescending) return items.sort(this.sortNameDesc); 
+            if(!isDescending) return items.sort(this.sortNameAsc); 
+          } //return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
+          if(index[0] == "amount") {
+            if(isDescending) return items.sort(this.sortReqDesc); 
+            if(!isDescending) return items.sort(this.sortReqAsc); 
+          } //return isDesc ? items.sort(this.sortReqDesc) : items.sort(this.sortReqAsc); 
+          if(index[0] == "current") {
+            if(isDescending) return items.sort(this.sortHaveDesc); 
+            if(!isDescending) return items.sort(this.sortHaveAsc); 
+          } //return isDesc ? items.sort(this.sortHaveDesc) : items.sort(this.sortHaveAsc);
+          if(index[0] == "farm") {
+            if(isDescending) {console.log("DESC: " + isDesc); return items.sort(this.sortFarmDesc); }
+            if(!isDescending) {console.log("ASC " + isDesc); return items.sort(this.sortFarmAsc);}
+          } //return isDesc ? items.sort(this.sortFarmDesc) : items.sort(this.sortFarmAsc);  
+        }
+        else {
+          if(isDesc) return items.sort(this.sortNameDesc); 
+          if(!isDesc) return items.sort(this.sortNameAsc); 
+        } //return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
       }, 
       sortFarmDesc: function(a, b) {
+        console.log("Sorting descending."); 
         var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
         var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
-        if(prog_a < prog_b) return -1; 
-        else if(prog_a > prog_b) return 1; 
-        else return 0; 
+        return prog_b - prog_a; 
       }, 
       sortFarmAsc: function(a, b) {
+        console.log("Sorting ascending."); 
         var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
         var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
-        if(prog_b < prog_a) return -1; 
-        else if(prog_b > prog_a) return 1; 
-        else return 0; 
+        return prog_a - prog_b; 
+      }, 
+      sortNameDesc: function(a, b) {
+        return a.name.localeCompare(b.name) * -1; 
+      }, 
+      sortNameAsc: function(a, b) {
+        return a.name.localeCompare(b.name); 
+      }, 
+      sortReqDesc: function(a, b) {
+        return b.amount - a.amount; 
+      }, 
+      sortReqAsc: function(a, b) {
+        return a.amount - b.amount; 
+      }, 
+      sortHaveDesc: function(a, b) {
+        return b.current - a.current; 
+      }, 
+      sortHaveAsc: function(a, b) {
+        return a.current - b.current; 
       }
     }, 
     watch: {
