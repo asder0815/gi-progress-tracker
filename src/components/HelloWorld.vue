@@ -98,14 +98,6 @@
         dialogSelection: 0, 
         search: "",
         filterEnabled: false,
-        /*sorting: {
-          default: {desc: this.sortNameDesc, asc: this.sortNameAsc},
-          name: {desc: this.sortNameDesc, asc: this.sortNameAsc},
-          icon: {desc: this.sortNameDesc, asc: this.sortNameAsc}, 
-          amount: {desc: this.sortReqDesc, asc: this.sortReqAsc}, 
-          current: {desc: this.sortHaveDesc, asc: this.sortHaveAsc}, 
-          farm: {desc: this.sortFarmDesc, asc: this.sortFarmAsc}
-        },*/
         hackCounter: 0
     }),
     computed: {
@@ -191,49 +183,21 @@
         return 'styleProgress-' + Math.round((this.getNormalizedProgress(item) * 100)); 
       }, 
       customSort(items, index, isDesc) { 
-        console.log("Index:");
-        console.log(index);
-        console.log(isDesc);  
-        /*if(index.length == 1) {
-          return isDesc ? items.sort(this.sorting[index[0]].asc) : items.sort(this.sorting[[0]].desc); 
-        }
-        else return isDesc ? items.sort(this.sorting.default.desc) : items.sort(this.sorting.default.asc); */
         if(index.length == 1 && isDesc.length == 1) {
-          var isDescending = isDesc[0];
-          if(index[0] == "name") {
-            if(isDescending) return items.sort(this.sortNameDesc); 
-            if(!isDescending) return items.sort(this.sortNameAsc); 
-          }//return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
-          if(index[0] == "icon") {
-            if(isDescending) return items.sort(this.sortNameDesc); 
-            if(!isDescending) return items.sort(this.sortNameAsc); 
-          } //return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
-          if(index[0] == "amount") {
-            if(isDescending) return items.sort(this.sortReqDesc); 
-            if(!isDescending) return items.sort(this.sortReqAsc); 
-          } //return isDesc ? items.sort(this.sortReqDesc) : items.sort(this.sortReqAsc); 
-          if(index[0] == "current") {
-            if(isDescending) return items.sort(this.sortHaveDesc); 
-            if(!isDescending) return items.sort(this.sortHaveAsc); 
-          } //return isDesc ? items.sort(this.sortHaveDesc) : items.sort(this.sortHaveAsc);
-          if(index[0] == "farm") {
-            if(isDescending) {console.log("DESC: " + isDesc); return items.sort(this.sortFarmDesc); }
-            if(!isDescending) {console.log("ASC " + isDesc); return items.sort(this.sortFarmAsc);}
-          } //return isDesc ? items.sort(this.sortFarmDesc) : items.sort(this.sortFarmAsc);  
+          if(index[0] == "name") return isDesc[0] ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
+          if(index[0] == "icon") return isDesc[0] ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
+          if(index[0] == "amount") return isDesc[0] ? items.sort(this.sortReqDesc) : items.sort(this.sortReqAsc); 
+          if(index[0] == "current") return isDesc[0] ? items.sort(this.sortHaveDesc) : items.sort(this.sortHaveAsc);
+          if(index[0] == "farm") return isDesc[0] ? items.sort(this.sortFarmDesc) : items.sort(this.sortFarmAsc);  
         }
-        else {
-          if(isDesc) return items.sort(this.sortNameDesc); 
-          if(!isDesc) return items.sort(this.sortNameAsc); 
-        } //return isDesc ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 
+        else return items.sort(this.sortFarmAsc); 
       }, 
       sortFarmDesc: function(a, b) {
-        console.log("Sorting descending."); 
         var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
         var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
         return prog_b - prog_a; 
       }, 
       sortFarmAsc: function(a, b) {
-        console.log("Sorting ascending."); 
         var prog_a = this.getNormalizedProgress({current: parseInt(a.current, 10), amount: a.amount});
         var prog_b = this.getNormalizedProgress({current: parseInt(b.current, 10), amount: b.amount}); 
         return prog_a - prog_b; 
