@@ -74,26 +74,29 @@
         Add
       </v-btn>
     </v-row>
-    <v-layout align-center justify-center row wrap>
+    <draggable v-model="characters" class="row wrap align-center justify-center" @end="recomputeCards">
       <character.comp
         v-for="(character, index) in characters"
         :key="index"
         :is="character.comp"
         v-bind:characterData="character.characterData"
         v-bind:id="character.id"
+        ref="card"
         @delete="onCharacterDelete(character.id, character.characterData.name)">
-      </character.comp>
-    </v-layout>
+      </character.comp> 
+    </draggable>
   </v-container>
 </template>
 
 <script>
   import CharacterCard from './CharacterCard';
+  import draggable from 'vuedraggable'
 
   export default {
     name: 'HelloWorld',
     components: {
-      CharacterCard
+      CharacterCard, 
+      draggable
     },
     data: () => ({
       characterName: "", 
@@ -209,6 +212,9 @@
       tableBackground(item) {
         return 'styleProgress-' + Math.round((this.getNormalizedProgress(item) * 100)); 
       }, 
+      recomputeCards() {
+        this.$refs.card.forEach(cc => {cc.recomputeProgress();});
+      },
       customSort(items, index, isDesc) { 
         if(index.length == 1 && isDesc.length == 1) {
           if(index[0] == "name") return isDesc[0] ? items.sort(this.sortNameDesc) : items.sort(this.sortNameAsc); 

@@ -220,10 +220,11 @@ export default {
         burstLevel: this.burstLevel,
         disabled: this.disabled}; 
       localStorage[this.characterData.name] = JSON.stringify(charData); 
-    }
-  }, 
-  mounted() {
-    if(localStorage[this.characterData.name]) {
+    }, 
+    recomputeProgress: function() {
+      this.getLevelsFromStorage(); 
+    }, 
+    getLevelsFromStorage: function() {
       var storageData = JSON.parse(localStorage[this.characterData.name]); 
       this.level = storageData.level; 
       this.ascension = storageData.ascension; 
@@ -232,6 +233,11 @@ export default {
       this.burstLevel = storageData.burstLevel; 
       this.disabled = storageData.disabled; 
       this.overlay = storageData.disabled; 
+    }
+  }, 
+  mounted() {
+    if(localStorage[this.characterData.name]) {
+      this.getLevelsFromStorage(); 
     }
     else this.saveToLocalStorage(); 
   }, 
