@@ -92,7 +92,8 @@ export default {
       validator: characterData => {
         return characterData != undefined; 
       }
-    }
+    }, 
+    priority: Number
   },
   data: () => ({
     dialog: false,
@@ -218,7 +219,8 @@ export default {
         atkLevel: this.atkLevel, 
         skillLevel: this.skillLevel, 
         burstLevel: this.burstLevel,
-        disabled: this.disabled}; 
+        disabled: this.disabled,
+        priority: this.priority}; 
       localStorage[this.characterData.name] = JSON.stringify(charData); 
     }, 
     recomputeProgress: function() {

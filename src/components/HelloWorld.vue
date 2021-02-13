@@ -81,6 +81,7 @@
         :is="character.comp"
         v-bind:characterData="character.characterData"
         v-bind:id="character.id"
+        v-bind:priority="characters.indexOf(character)"
         ref="card"
         @delete="onCharacterDelete(character.id, character.characterData.name)">
       </character.comp> 
@@ -264,11 +265,12 @@
       var charList = []; 
       this.characterSelection.forEach(character => {
         if(localStorage[character]) {
-          charList.push(character); 
+          var char = JSON.parse(localStorage[character]); 
+          charList.push({name: char.name, priority: char.priority}); 
         }
       });
-      charList.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0)).forEach(character => {
-        this.addCharacter(character); 
+      charList.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).forEach(character => {
+        this.addCharacter(character.name); 
       }); 
     }
   }
