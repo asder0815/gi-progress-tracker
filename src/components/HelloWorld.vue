@@ -4,10 +4,19 @@
       <v-expansion-panel>
         <v-expansion-panel-header>Required Materials</v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-switch 
-            v-model="filterEnabled" 
-            inset :label='"Hide completed"'>
-          </v-switch>
+          <v-row>
+            <v-switch 
+              v-model="filterEnabled" 
+              inset :label='"Hide completed"'>
+            </v-switch>
+            <v-spacer/>
+            <v-select
+              v-model="filterTypes"
+              :items="types"
+              label="Filter"
+              persistent-hint
+            ></v-select>
+          </v-row>
           <v-text-field 
             v-model="search" 
             append-icon="mdi-magnify" 
@@ -98,6 +107,13 @@
         dialogSelection: 0, 
         search: "",
         filterEnabled: false,
+        filterTypes: "All",
+        types: [
+          "All", 
+          "Resin", 
+          "Weekly",
+          "No Resin"
+        ],
         hackCounter: 0
     }),
     computed: {
@@ -135,7 +151,12 @@
       }, 
       customFilter: function() { 
         return JSON.stringify({hide: this.filterEnabled, search: this.search}); 
-
+      }, 
+      targetType: function() {
+        if(this.filterTypes == "All") return ["all"]; 
+        if(this.filterTypes == "No Resin") return ["world"]; 
+        if(this.filterTypes == "Weekly") return ["weekly"]; 
+        else return ["domain", "boss"]; 
       }
     },
     methods: {
@@ -167,10 +188,15 @@
         if(value == null) return false; 
         var cf = JSON.parse(search);
         if(cf.search == "" || item.name.toLowerCase().includes(cf.search)) {
-          if(!cf.hide) return true; 
-          else return item.farm > 0; 
+          if(!cf.hide) return this.filterType(item); 
+          else return item.farm > 0 && this.filterType(item); 
         }
         else return false; 
+      },
+      filterType(item) {
+        var mats = this.$store.state.materialList.materials;
+        var type = Object.keys(mats).filter(matName => this.targetType.includes(mats[matName].type) && mats[matName].name == item.name);
+        return this.targetType == "all" || type.length > 0;   
       },
       recompute() {
         this.hackCounter++; 
