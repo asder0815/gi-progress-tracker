@@ -16,14 +16,15 @@
               label="Filter"
               persistent-hint
             ></v-select>
+            <v-spacer/>
+            <v-text-field 
+              v-model="search" 
+              append-icon="mdi-magnify" 
+              label="Search" 
+              single-line 
+              hide-details>
+            </v-text-field>
           </v-row>
-          <v-text-field 
-            v-model="search" 
-            append-icon="mdi-magnify" 
-            label="Search" 
-            single-line 
-            hide-details>
-          </v-text-field>
           <v-data-table 
             :headers="headers" 
             :items="tableItems" 
