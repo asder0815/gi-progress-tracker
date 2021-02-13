@@ -254,12 +254,16 @@
       }
     },
     mounted() {
+      if(localStorage.currentMaterials) this.currentItems = JSON.parse(localStorage.currentMaterials); 
+      var charList = []; 
       this.characterSelection.forEach(character => {
         if(localStorage[character]) {
-          this.addCharacter(character); 
+          charList.push(character); 
         }
       });
-      if(localStorage.currentMaterials) this.currentItems = JSON.parse(localStorage.currentMaterials); 
+      charList.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0)).forEach(character => {
+        this.addCharacter(character); 
+      }); 
     }
   }
 </script>
