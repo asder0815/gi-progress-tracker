@@ -74,7 +74,7 @@
         Add
       </v-btn>
     </v-row>
-    <draggable v-model="characters" class="row wrap align-center justify-center" @end="recomputeCards">
+    <draggable v-model="characters" handle=".handle" class="row wrap align-center justify-center" @end="recomputeCards">
       <character.comp
         v-for="(character, index) in characters"
         :key="index"

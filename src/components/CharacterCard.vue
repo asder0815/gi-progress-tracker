@@ -4,7 +4,7 @@
       <v-row class="mt-1 mx-1">
         <v-col cols="3">
           <v-row justify="center">
-            <v-img :src="characterData.picture" max-height="90" max-width="90" class="mb-2"/>
+            <v-img :src="characterData.picture" max-height="90" max-width="90" class="mb-2 handle"/>
           </v-row>
           <v-row justify="center">
             <v-btn depressed block @click.stop="enableCharacter(!disabled)" class="mb-2">{{disabled ? "Enable" : "Disable"}}</v-btn>
