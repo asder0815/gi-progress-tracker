@@ -128,6 +128,7 @@
         chars.forEach(char => {
           if(this.characters.find(obj => { return obj.characterData.name ==  char.name}) == undefined) result.push(char.name); 
         });
+        result.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0)); 
         return result; 
       }, 
       tableItems: function() {
