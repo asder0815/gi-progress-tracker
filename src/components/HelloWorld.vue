@@ -86,6 +86,21 @@
         @delete="onCharacterDelete(character.id, character.characterData.name)">
       </character.comp> 
     </draggable>
+    <v-dialog v-model="termsOfService" persistent width="500">
+      <v-card>
+        <v-card-title class="headline primary">
+         IMPORTANT NOTICE
+        </v-card-title>
+        <v-card-text class="mt-5">
+          Please send feedback to MiHoYo about Rosarias rumored breast reduction.
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="acceptToS">I accept</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -119,6 +134,7 @@
           "Weekly",
           "No Resin"
         ],
+        termsOfService: true,
         hackCounter: 0
     }),
     computed: {
@@ -254,6 +270,10 @@
       }, 
       sortHaveAsc: function(a, b) {
         return a.current - b.current; 
+      },
+      acceptToS: function() {
+        this.termsOfService = false; 
+        localStorage.tos = true; 
       }
     }, 
     watch: {
@@ -262,6 +282,7 @@
       }
     },
     mounted() {
+      if(localStorage.tos) this.termsOfService = JSON.parse(localStorage.tos) == true ? false : true; 
       if(localStorage.currentMaterials) this.currentItems = JSON.parse(localStorage.currentMaterials); 
       var charList = []; 
       this.characterSelection.forEach(character => {
