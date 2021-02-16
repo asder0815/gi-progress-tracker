@@ -894,6 +894,50 @@ export default new Vuex.Store({
     xpMaterials: {
       character: {name: 'Hero’s Wit', amount: 20000}
     }, 
+    xpTableWeapons: {
+      rarity1 : [{xp: 24315, mora: 2440},{xp: 124550, mora: 12460}, {xp: 125625, mora: 12580},{xp: 185525, mora: 18560},{xp: 256850, mora: 26000},{xp: 0, mora: 0},{xp: 0, mora: 0}],
+      rarity2 : [{xp: 36400, mora: 3640},{xp: 186825, mora: 18700}, {xp: 188425, mora: 18860},{xp: 278300, mora: 27840},{xp: 389725, mora: 38980},{xp: 0, mora: 0},{xp: 0, mora: 0}],
+      rarity3 : [{xp: 53475, mora: 5360},{xp: 274000, mora: 27400}, {xp: 276350, mora: 27640},{xp: 408150, mora: 40820},{xp: 571625, mora: 57180},{xp: 770125, mora: 77020},{xp: 1634475, mora: 163460}],
+      rarity4 : [{xp: 81000, mora: 8100},{xp: 415125, mora: 41520}, {xp: 418725, mora: 41880},{xp: 618400, mora: 61840},{xp: 866050, mora: 86620},{xp: 1166875, mora: 116700},{xp: 2476475, mora: 247660}],
+      rarity5 : [{xp: 121550, mora: 12160},{xp: 622800, mora: 62280}, {xp: 628150, mora: 62820},{xp: 927675, mora: 92780},{xp: 1299125, mora: 129920},{xp: 1750375, mora: 175040},{xp: 3714775, mora: 371480}],
+    }, 
+    ascensionTableWeapons: {
+      rarity1: [
+        {wm_T1: 1, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 1, cm1_T2: 0, cm1_T3: 0, cm2_T1: 1, cm2_T2: 0, cm3_T3: 0, mora: 0}, 
+        {wm_T1: 0, wm_T2: 1, wm_T3: 0, wm_T4: 0, cm1_T1: 4, cm1_T2: 0, cm1_T3: 0, cm2_T1: 2, cm2_T2: 0, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 2, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 2, cm1_T3: 0, cm2_T1: 0, cm2_T2: 2, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 1, wm_T4: 0, cm1_T1: 0, cm1_T2: 4, cm1_T3: 0, cm2_T1: 0, cm2_T2: 3, cm3_T3: 0, mora: 10000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 0, cm2_T1: 0, cm2_T2: 0, cm3_T3: 0, mora: 0}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 0, cm2_T1: 0, cm2_T2: 0, cm3_T3: 0, mora: 0}],
+      rarity2: [
+        {wm_T1: 1, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 1, cm1_T2: 0, cm1_T3: 0, cm2_T1: 1, cm2_T2: 0, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 1, wm_T3: 0, wm_T4: 0, cm1_T1: 5, cm1_T2: 0, cm1_T3: 0, cm2_T1: 4, cm2_T2: 0, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 3, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 3, cm1_T3: 0, cm2_T1: 0, cm2_T2: 3, cm3_T3: 0, mora: 10000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 1, wm_T4: 0, cm1_T1: 0, cm1_T2: 5, cm1_T3: 0, cm2_T1: 0, cm2_T2: 4, cm3_T3: 0, mora: 15000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 0, cm2_T1: 0, cm2_T2: 0, cm3_T3: 0, mora: 0}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 0, cm2_T1: 0, cm2_T2: 0, cm3_T3: 0, mora: 0}],
+      rarity3: [
+        {wm_T1: 2, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 2, cm1_T2: 0, cm1_T3: 0, cm2_T1: 1, cm2_T2: 0, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 2, wm_T3: 0, wm_T4: 0, cm1_T1: 8, cm1_T2: 0, cm1_T3: 0, cm2_T1: 5, cm2_T2: 0, cm3_T3: 0, mora: 10000}, 
+        {wm_T1: 0, wm_T2: 4, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 4, cm1_T3: 0, cm2_T1: 0, cm2_T2: 4, cm3_T3: 0, mora: 15000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 2, wm_T4: 0, cm1_T1: 0, cm1_T2: 8, cm1_T3: 0, cm2_T1: 0, cm2_T2: 6, cm3_T3: 0, mora: 20000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 4, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 6, cm2_T1: 0, cm2_T2: 0, cm3_T3: 4, mora: 25000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 3, cm1_T1: 0, cm1_T2: 0, cm1_T3: 12, cm2_T1: 0, cm2_T2: 0, cm3_T3: 8, mora: 30000}],
+      rarity4: [
+        {wm_T1: 3, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 3, cm1_T2: 0, cm1_T3: 0, cm2_T1: 2, cm2_T2: 0, cm3_T3: 0, mora: 5000}, 
+        {wm_T1: 0, wm_T2: 3, wm_T3: 0, wm_T4: 0, cm1_T1: 12, cm1_T2: 0, cm1_T3: 0, cm2_T1: 8, cm2_T2: 0, cm3_T3: 0, mora: 15000}, 
+        {wm_T1: 0, wm_T2: 6, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 6, cm1_T3: 0, cm2_T1: 0, cm2_T2: 6, cm3_T3: 0, mora: 20000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 3, wm_T4: 0, cm1_T1: 0, cm1_T2: 12, cm1_T3: 0, cm2_T1: 0, cm2_T2: 9, cm3_T3: 0, mora: 30000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 6, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 9, cm2_T1: 0, cm2_T2: 0, cm3_T3: 6, mora: 35000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 4, cm1_T1: 0, cm1_T2: 0, cm1_T3: 18, cm2_T1: 0, cm2_T2: 0, cm3_T3: 12, mora: 45000}],
+      rarity5: [
+        {wm_T1: 5, wm_T2: 0, wm_T3: 0, wm_T4: 0, cm1_T1: 5, cm1_T2: 0, cm1_T3: 0, cm2_T1: 3, cm2_T2: 0, cm3_T3: 0, mora: 10000}, 
+        {wm_T1: 0, wm_T2: 5, wm_T3: 0, wm_T4: 0, cm1_T1: 18, cm1_T2: 0, cm1_T3: 0, cm2_T1: 12, cm2_T2: 0, cm3_T3: 0, mora: 20000}, 
+        {wm_T1: 0, wm_T2: 9, wm_T3: 0, wm_T4: 0, cm1_T1: 0, cm1_T2: 9, cm1_T3: 0, cm2_T1: 0, cm2_T2: 9, cm3_T3: 0, mora: 30000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 5, wm_T4: 0, cm1_T1: 0, cm1_T2: 18, cm1_T3: 0, cm2_T1: 0, cm2_T2: 14, cm3_T3: 0, mora: 45000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 9, wm_T4: 0, cm1_T1: 0, cm1_T2: 0, cm1_T3: 14, cm2_T1: 0, cm2_T2: 0, cm3_T3: 9, mora: 55000}, 
+        {wm_T1: 0, wm_T2: 0, wm_T3: 0, wm_T4: 6, cm1_T1: 0, cm1_T2: 0, cm1_T3: 27, cm2_T1: 0, cm2_T2: 0, cm3_T3: 18, mora: 65000}]
+    }, 
     materialList: C,
     summaryData: []
   },
