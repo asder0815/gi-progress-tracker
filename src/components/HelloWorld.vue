@@ -65,7 +65,7 @@
       <v-select 
         v-model="characterName" 
         :items="characterSelection" 
-        label="Add new project" 
+        label="Add new character project" 
         class="mr-3">
       </v-select>
       <v-btn 
@@ -86,6 +86,33 @@
         @delete="onCharacterDelete(character.id, character.characterData.name)">
       </character.comp> 
     </draggable>
+
+    <v-row align="center" justify="space-around" class="mt-5">
+      <v-select 
+        v-model="weaponName" 
+        :items="weaponSelection" 
+        label="Add new weapon project" 
+        class="mr-3">
+      </v-select>
+      <v-btn 
+        @click="addWeapon(weaponName)" 
+        :disabled="this.weaponName==''">
+        Add
+      </v-btn>
+    </v-row>
+    <draggable v-model="weapons" handle=".handle" class="row wrap align-center justify-center" @end="recomputeCardsWpns">
+      <weapon.comp
+        v-for="(weapon, index) in weapons"
+        :key="index"
+        :is="weapon.comp"
+        v-bind:weaponData="weapon.weaponData"
+        v-bind:id="weapon.id"
+        v-bind:priority="weapons.indexOf(weapon)"
+        ref="cardWpns"
+        @delete="onWeaponDelete(weapon.id, weapon.weaponData.name)">
+      </weapon.comp> 
+    </draggable>
+
     <v-dialog v-model="termsOfService" persistent width="500">
       <v-card>
         <v-card-title class="headline primary">
@@ -106,17 +133,21 @@
 
 <script>
   import CharacterCard from './CharacterCard';
+  import WeaponCard from './WeaponCard';
   import draggable from 'vuedraggable'
 
   export default {
     name: 'HelloWorld',
     components: {
       CharacterCard, 
+      WeaponCard, 
       draggable
     },
     data: () => ({
       characterName: "", 
+      weaponName: "", 
       characters: [], 
+      weapons: [], 
       currentItems: {},
       headers: [
         {text: "Material", align: "start", value: "name"}, 
@@ -124,18 +155,18 @@
         {text: "Required:", value: "amount"}, 
         {text: "Current:", value: "current"}, 
         {text: "To Farm:", value: "farm"}], 
-        dialogSelection: 0, 
-        search: "",
-        filterEnabled: false,
-        filterTypes: "All",
-        types: [
-          "All", 
-          "Resin", 
-          "Weekly",
-          "No Resin"
-        ],
-        termsOfService: true,
-        hackCounter: 0
+      dialogSelection: 0, 
+      search: "",
+      filterEnabled: false,
+      filterTypes: "All",
+      types: [
+        "All", 
+        "Resin", 
+        "Weekly",
+        "No Resin"
+      ],
+      termsOfService: true,
+      hackCounter: 0
     }),
     computed: {
       characterSelection: function() {
@@ -143,6 +174,15 @@
         var result = []; 
         chars.forEach(char => {
           if(this.characters.find(obj => { return obj.characterData.name ==  char.name}) == undefined) result.push(char.name); 
+        });
+        result.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0)); 
+        return result; 
+      }, 
+      weaponSelection: function() {
+        var wpns = this.$store.state.weapons; 
+        var result = []; 
+        wpns.forEach(wpn => {
+          if(this.weapons.find(obj => { return obj.weaponData.name ==  wpn.name}) == undefined) result.push(wpn.name); 
         });
         result.sort((a,b) => (a > b) ? 1 : ((b > a) ? -1 : 0)); 
         return result; 
@@ -195,6 +235,19 @@
         this.characters.splice(this.characters.findIndex(f => f.id === idToDelete), 1); 
         localStorage.removeItem(nameToDelete); 
       },
+      addWeapon: function(newWpnName) {
+        this.$store.commit('increaseCount'); 
+        this.weapons.push({
+          id: this.$store.state.count,
+          weaponData: this.$store.state.weapons.find(obj => { return obj.name === newWpnName }),
+          comp: WeaponCard
+        }); 
+        this.weaponName = ""; 
+      }, 
+      onWeaponDelete: function(idToDelete, nameToDelete) {
+        this.weapons.splice(this.weapons.findIndex(f => f.id === idToDelete), 1); 
+        localStorage.removeItem(nameToDelete); 
+      },
       saveMaterialsToLocalStorage: function(materials) {
         localStorage.currentMaterials = JSON.stringify(materials); 
       }, 
@@ -232,6 +285,9 @@
       }, 
       recomputeCards() {
         this.$refs.card.forEach(cc => {cc.recomputeProgress();});
+      },
+      recomputeCardsWpns() {
+        this.$refs.cardWpns.forEach(cc => {cc.recomputeProgress();});
       },
       customSort(items, index, isDesc) { 
         if(index.length == 1 && isDesc.length == 1) {
@@ -293,6 +349,16 @@
       });
       charList.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).forEach(character => {
         this.addCharacter(character.name); 
+      }); 
+      var wpnList = []; 
+      this.weaponSelection.forEach(weapon => {
+        if(localStorage[weapon]) {
+          var wpn = JSON.parse(localStorage[weapon]); 
+          wpnList.push({name: wpn.name, priority: wpn.priority}); 
+        }
+      });
+      wpnList.sort((a,b) => (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1 : 0)).forEach(weapon => {
+        this.addWeapon(weapon.name); 
       }); 
     }
   }
