@@ -34,6 +34,15 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-row>
+      <v-switch v-model="crafted" inset label="Crafted"></v-switch>
+      <v-container>
+        Refine:
+        <vue-slider v-model="refine" :label="labels.refine" :min="1" :max="5" :marks="[1, 2, 3, 4, 5]" :included="true" :contained="true" class="mb-1"/>
+      </v-container>
+    </v-row>
+
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on" depressed block> View Required Materials </v-btn>
@@ -78,8 +87,9 @@ export default {
     overlay: false, 
     level: [0, 90], 
     ascension: [0, 6],
-    //refine: [1, 10],
-    labels: {level: "Levels: ", ascension: "Ascensions: "}, 
+    crafted: false,
+    refine: [1, 5],
+    labels: {level: "Levels: ", ascension: "Ascensions: ", refine: "Refine: "}, 
     headers: [{text: "Material", align: "start", value: "name"}, {text: "Icon", sortable: "false", value: "icon"}, {text: "Amount", value: "amount"}]
   }), 
   computed: {
@@ -89,15 +99,9 @@ export default {
     requiredAscensions: function() {
       return this.getRequired(this.ascension); 
     }, 
-    /*requiredAtkTalents: function() {
-      return this.getRequired(this.atkLevel); 
+    requiredRefines: function() {
+      return this.getRequired(this.refine); 
     },
-    requiredSkillTalents: function() {
-      return this.getRequired(this.skillLevel); 
-    },
-    requiredBurstTalents: function() {
-      return this.getRequired(this.burstLevel); 
-    },*/
     summary_requiredXP: function() {
       var result = 0;
       var xpTable = this.$store.state.xpTableWeapons[this.weaponData.rarity];
@@ -121,7 +125,7 @@ export default {
         } 
       }
       result += this.summary_requiredAscensionMats.mora; 
-      //result += this.summary_requiredRefineMats.mora; 
+      result += this.summary_requiredRefineMora; 
       return result; 
     },
     summary_requiredAscensionMats: function() {
@@ -134,18 +138,25 @@ export default {
       }
       return result; 
     }, 
-    /*summary_requiredRefineMats: function() {
-      var talTable = this.$store.state.ascensionTableWeapons; 
-      var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_Talent_T1: 0, commonMat_Talent_T2: 0, commonMat_Talent_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
-      [this.requiredAtkTalents, this.requiredSkillTalents, this.requiredBurstTalents].forEach(req => {
-        for(var i = Math.min(...req)-2; i < Math.max(...req)-1; i++) {
-          Object.keys(result).forEach(function(key) {
-            result[key] += talTable[i][key];
-          });
-        }
-      });
+    summary_requiredRefineMats: function() {
+      var amountCraft = 1 + (Math.max(...this.refine) - Math.min(...this.refine)); 
+      if(this.crafted && amountCraft > 0) amountCraft--; 
+      var result = []; 
+      if(this.weaponData.crafted == true && amountCraft > 0) {
+        this.weaponData.craftingMats.forEach(element => {
+          result.push({name: element.item.name, icon: element.item.icon, amount: element.amount * amountCraft}); 
+        }); 
+      }
+      else if(amountCraft > 0) {
+        result.push({name: this.weaponData.name, icon: this.weaponData.picture, amout: amountCraft}); 
+      }
       return result; 
-    },*/
+    },
+    summary_requiredRefineMora: function() {
+      var amountCraft = Math.max(...this.requiredAscensions) - Math.min(...this.requiredAscensions); 
+      if(this.crafted && amountCraft > 0) amountCraft--; 
+      return amountCraft * 500; 
+    },
     tableItems: function() {
       return this.getTableItems(); 
     }
@@ -165,12 +176,15 @@ export default {
     getTableItems: function() {
       var result = []; 
       var data = this.weaponData; 
-      [this.summary_requiredAscensionMats/*, this.summary_requiredRefineMats*/].forEach(summary => {
+      [this.summary_requiredAscensionMats].forEach(summary => {
         Object.keys(summary).forEach(function(key) {
           if(data[key] != undefined && key != 'mora' && summary[key] > 0) result.push({name: data[key].name, icon: data[key].icon, amount: summary[key]}); 
         });
       });
       if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.weapon.name, icon: this.$store.state.materialList.materials.enhancment_ore.icon, amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.weapon.amount)}); 
+      this.summary_requiredRefineMats.forEach(element => {
+        result.push(element); 
+      });
       if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: this.$store.state.materialList.materials.mora.icon, amount: this.summary_requiredMora}); 
       if(!this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: result});
       else this.$store.commit('updateSummaryData', {id: this.id, data: []});

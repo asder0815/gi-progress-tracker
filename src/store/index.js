@@ -104,13 +104,23 @@ const C = {
     item_nectar_T1: {name: 'Whopperflower Nectar', icon: require('@/assets/material_icons/Item_Nectar_Whopperflower.png'), type: "world"}, 
     item_nectar_T2: {name: 'Shimmering Nectar', icon: require('@/assets/material_icons/Item_Nectar_Shimmering.png'), type: "world"}, 
     item_nectar_T3: {name: 'Energy Nectar', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "world"}, 
-    item_branch_T1: {name: 'Dead Ley Line Branch', icon: require('@/assets/material_icons/Item_Nectar_Whopperflower.png'), type: "world"}, 
-    item_branch_T2: {name: 'Dead Ley Line Leaves', icon: require('@/assets/material_icons/Item_Nectar_Shimmering.png'), type: "world"}, 
-    item_branch_T3: {name: 'Ley Line Sprout', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "world"}, 
-    wpn_boreal_wolf_T1: {name: 'Boreal Wolf’s Milk Tooth', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "domain"}, 
-    wpn_boreal_wolf_T2: {name: 'Boreal Wolf’s Cracked Tooth', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "domain"},
-    wpn_boreal_wolf_T3: {name: 'Boreal Wolf’s Broken Fang', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "domain"},
-    wpn_boreal_wolf_T4: {name: 'Boreal Wolf’s Nostalgia', icon: require('@/assets/material_icons/Item_Nectar_Energy.png'), type: "domain"},
+    item_branch_T1: {name: 'Dead Ley Line Branch', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    item_branch_T2: {name: 'Dead Ley Line Leaves', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    item_branch_T3: {name: 'Ley Line Sprout', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    item_knife_T1: {name: 'Hunter’s Sacrificial Knife', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    item_knife_T2: {name: 'Agent’s Sacrificial Knife', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    item_knife_T3: {name: 'Inspector’s Sacrificial Knife', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}, 
+    wpn_boreal_wolf_T1: {name: 'Boreal Wolf’s Milk Tooth', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"}, 
+    wpn_boreal_wolf_T2: {name: 'Boreal Wolf’s Cracked Tooth', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    wpn_boreal_wolf_T3: {name: 'Boreal Wolf’s Broken Fang', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    wpn_boreal_wolf_T4: {name: 'Boreal Wolf’s Nostalgia', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    wpn_guyun_T1: {name: 'Luminous Sands from Guyun', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"}, 
+    wpn_guyun_T2: {name: 'Lustrous Stone from Guyun', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    wpn_guyun_T3: {name: 'Relic from Guyun', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    wpn_guyun_T4: {name: 'Divine Body from Guyun', icon: require('@/assets/talent_icons/notAvailable.png'), type: "domain"},
+    prototype_lance: {name: 'Northlander Polearm Prototype', icon: require('@/assets/talent_icons/notAvailable.png'), type: "weekly"},
+    ore_crystal_chunk: {name: 'Crystal Chunk', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"},
+    ore_white_iron: {name: 'White Iron Chunk', icon: require('@/assets/talent_icons/notAvailable.png'), type: "world"}
   }
 }
 
@@ -887,6 +897,30 @@ export default new Vuex.Store({
         cm2_T1: C.materials.item_slime_T1, 
         cm2_T2: C.materials.item_slime_T2, 
         cm2_T3: C.materials.item_slime_T3, 
+        crafted: false, 
+        craftingMats: {}
+      },
+      {
+        name: "Crescent Pike", 
+        picture: require('@/assets/talent_icons/notAvailable.png'),
+        description: "Crescent Pike",
+        rarity: "rarity4",
+        wm_T1: C.materials.wpn_boreal_wolf_T1, 
+        wm_T2: C.materials.wpn_boreal_wolf_T2, 
+        wm_T3: C.materials.wpn_boreal_wolf_T3, 
+        wm_T4: C.materials.wpn_boreal_wolf_T4, 
+        cm1_T1: C.materials.item_branch_T1, 
+        cm1_T2: C.materials.item_branch_T2, 
+        cm1_T3: C.materials.item_branch_T3, 
+        cm2_T1: C.materials.item_raven_insignia_T1, 
+        cm2_T2: C.materials.item_raven_insignia_T2, 
+        cm2_T3: C.materials.item_raven_insignia_T3, 
+        crafted: true, 
+        craftingMats: [
+          {item: C.materials.prototype_lance, amount: 1},
+          {item: C.materials.ore_crystal_chunk, amount: 50},
+          {item: C.materials.ore_white_iron, amount: 50}
+        ]
       }
     ],
     xpTable: [
