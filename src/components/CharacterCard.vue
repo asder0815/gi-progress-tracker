@@ -145,12 +145,14 @@ export default {
           result += xpTable[i].mora; 
         } 
       }
+      if(this.characterData.individualTalents != undefined && this.characterData.individualTalents == true) return result; 
       result += this.summary_requiredAscensionMats.mora; 
       result += this.summary_requiredTalentMats.mora; 
       return result; 
     },
     summary_requiredAscensionMats: function() {
       var ascTable = this.$store.state.ascensionTable;
+      if(this.characterData.individualTalents != undefined && this.characterData.individualTalents == true) return; 
       var result = {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 0, core: 0, speciality: 0, commonMat_Ascension_T1: 0, commonMat_Ascension_T2: 0, commonMat_Ascension_T3: 0, mora: 0}; 
       for(var i = Math.min(...this.requiredAscensions)-1; i < Math.max(...this.requiredAscensions); i++) {
         Object.keys(result).forEach(function(key) {
@@ -160,7 +162,8 @@ export default {
       return result; 
     }, 
     summary_requiredTalentMats: function() {
-      var talTable = this.$store.state.talentTable; 
+      var talTable = this.$store.state.talentTable;
+      if(this.characterData.individualTalents != undefined && this.characterData.individualTalents == true) return; 
       var result = {book_T1: 0, book_T2: 0, book_T3: 0, commonMat_Talent_T1: 0, commonMat_Talent_T2: 0, commonMat_Talent_T3: 0, worldBossMat: 0, crown: 0, mora: 0}; 
       [this.requiredAtkTalents, this.requiredSkillTalents, this.requiredBurstTalents].forEach(req => {
         for(var i = Math.min(...req)-2; i < Math.max(...req)-1; i++) {
@@ -190,13 +193,54 @@ export default {
     getTableItems: function() {
       var result = []; 
       var data = this.characterData; 
-      [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
-        Object.keys(summary).forEach(function(key) {
-          if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: data[key].icon, amount: summary[key]}); 
-        });
-      }); 
-      if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: this.$store.state.materialList.materials.experience.icon, amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
-      if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: this.$store.state.materialList.materials.mora.icon, amount: this.summary_requiredMora}); 
+      if(this.characterData.individualTalents != undefined && this.characterData.individualTalents == true)
+      {
+        var mora = 0; 
+        var ascTable = this.$store.state.ascensionTable;
+        var ascMats = {elementalMat_T1: 0, elementalMat_T2: 0, elementalMat_T3: 0, elementalMat_T4: 0, speciality: 0, commonMat_Ascension_T1: 0, commonMat_Ascension_T2: 0, commonMat_Ascension_T3: 0, mora: 0}; 
+        for(var i = Math.min(...this.requiredAscensions)-1; i < Math.max(...this.requiredAscensions); i++) {
+          Object.keys(ascMats).forEach(function(key) {
+            ascMats[key] += ascTable[i][key];
+          });
+        }
+        data = this.characterData.mats_ascension; 
+        [ascMats].forEach(summary => {
+          Object.keys(summary).forEach(function(key) {
+            if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: data[key].icon, amount: summary[key]}); 
+          });
+        });  
+        if(ascMats.mora != undefined) mora += ascMats.mora; 
+        this.requiredAtkTalents.forEach(level => {
+          this.characterData.mats_atk[level].forEach(material => {
+            if(material.material.name != "Mora") result.push({name: material.material.name, icon: material.material.icon, amount: material.amount});
+            else mora += material.amount;
+          });
+        }); 
+        this.requiredSkillTalents.forEach(level => {
+          this.characterData.mats_skill[level].forEach(material => {
+            if(material.material.name != "Mora") result.push({name: material.material.name, icon: material.material.icon, amount: material.amount}); 
+            else mora += material.amount;
+          });
+        }); 
+        this.requiredBurstTalents.forEach(level => {
+          this.characterData.mats_burst[level].forEach(material => {
+            if(material.material.name != "Mora") result.push({name: material.material.name, icon: material.material.icon, amount: material.amount}); 
+            else mora += material.amount;
+          });
+        }); 
+        if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: this.$store.state.materialList.materials.experience.icon, amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+        mora += this.summary_requiredMora; 
+        if(mora > 0) result.push({name: 'Mora', icon: this.$store.state.materialList.materials.mora.icon, amount: mora}); 
+      }
+      else {
+        [this.summary_requiredAscensionMats, this.summary_requiredTalentMats].forEach(summary => {
+          Object.keys(summary).forEach(function(key) {
+            if(summary[key] > 0 && key != 'mora') result.push({name: data[key].name, icon: data[key].icon, amount: summary[key]}); 
+          });
+        });  
+        if(this.summary_requiredXP > 0) result.push({name: this.$store.state.xpMaterials.character.name, icon: this.$store.state.materialList.materials.experience.icon, amount: Math.ceil(this.summary_requiredXP / this.$store.state.xpMaterials.character.amount)}); 
+        if(this.summary_requiredMora > 0) result.push({name: 'Mora', icon: this.$store.state.materialList.materials.mora.icon, amount: this.summary_requiredMora}); 
+      }
       if(!this.disabled) this.$store.commit('updateSummaryData', {id: this.id, data: result});
       else this.$store.commit('updateSummaryData', {id: this.id, data: []});
       return result; 

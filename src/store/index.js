@@ -8,6 +8,10 @@ const C = {
     mora: {name: 'Mora', icon: require('@/assets/material_icons/Mora.png'), type: "domain"},
     experience: {name: "Hero's Wit", icon: require("@/assets/material_icons/Item_Hero_s_Wit.png"), type: "domain"},
     crown: {name: 'Crown of Insight', icon: require('@/assets/material_icons/Crown_of_Insight.png'), type: "special"}, 
+    diamond_T1: {name: 'Brilliant Diamond Sliver', icon: require('@/assets/material_icons/Brilliant Diamond Sliver.png'), type: "boss"}, 
+    diamond_T2: {name: 'Brilliant Diamond Fragment', icon: require('@/assets/material_icons/Brilliant Diamond Fragment.png'), type: "boss"}, 
+    diamond_T3: {name: 'Brilliant Diamond Chunk', icon: require('@/assets/material_icons/Brilliant Diamond Chunk.png'), type: "boss"}, 
+    diamond_T4: {name: 'Brilliant Diamond Gemstone', icon: require('@/assets/material_icons/Brilliant Diamond Gemstone.png'), type: "boss"}, 
     fire_crystal_T1: {name: 'Agnidus Agate Sliver', icon: require('@/assets/material_icons/Agnidus Agate Sliver.png'), type: "boss"}, 
     fire_crystal_T2: {name: 'Agnidus Agate Fragment', icon: require('@/assets/material_icons/Agnidus Agate Fragment.png'), type: "boss"}, 
     fire_crystal_T3: {name: 'Agnidus Agate Chunk', icon: require('@/assets/material_icons/Agnidus Agate Chunk.png'), type: "boss"}, 
@@ -112,6 +116,358 @@ export default new Vuex.Store({
     xpAll: 0, 
     moraAll: 0,
     characters: [
+      { 
+        name: 'Traveler (Anemo)',
+        individualTalents: true,  
+        picture: require('@/assets/character_portraits/traveler.png'), 
+        iconAtk: require('@/assets/talent_icons/sword_atk.png'), 
+        iconSkill: require('@/assets/talent_icons/traveler_wind_skill.png'), 
+        iconBurst: require('@/assets/talent_icons/traveler_wind_burst.png'),
+        mats_ascension: {
+          elementalMat_T1: C.materials.diamond_T1,
+          elementalMat_T2: C.materials.diamond_T2, 
+          elementalMat_T3: C.materials.diamond_T3, 
+          elementalMat_T4: C.materials.diamond_T4, 
+          speciality: C.materials.speciality_windwheel_aster, 
+          commonMat_Ascension_T1: C.materials.item_mask_T1, 
+          commonMat_Ascension_T2: C.materials.item_mask_T2, 
+          commonMat_Ascension_T3: C.materials.item_mask_T3, 
+        },
+        mats_atk: {
+          2: [
+            {material: C.materials.book_freedom_T1, amount: 3},
+            {material: C.materials.item_scroll_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_resistance_T2, amount: 2},
+            {material: C.materials.item_scroll_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_ballad_T2, amount: 4},
+            {material: C.materials.item_scroll_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_freedom_T2, amount: 6},
+            {material: C.materials.item_scroll_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_resistance_T2, amount: 9},
+            {material: C.materials.item_scroll_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_ballad_T3, amount: 4},
+            {material: C.materials.item_scroll_T3, amount: 4},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_freedom_T3, amount: 6},
+            {material: C.materials.item_scroll_T3, amount: 6},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_resistance_T3, amount: 12},
+            {material: C.materials.item_scroll_T3, amount: 9},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_ballad_T3, amount: 16},
+            {material: C.materials.item_scroll_T3, amount: 12},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        mats_skill: {
+          2: [
+            {material: C.materials.book_freedom_T1, amount: 3},
+            {material: C.materials.item_scroll_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_resistance_T2, amount: 2},
+            {material: C.materials.item_scroll_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_ballad_T2, amount: 4},
+            {material: C.materials.item_scroll_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_freedom_T2, amount: 6},
+            {material: C.materials.item_scroll_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_resistance_T2, amount: 9},
+            {material: C.materials.item_scroll_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_ballad_T3, amount: 4},
+            {material: C.materials.item_scroll_T3, amount: 4},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_freedom_T3, amount: 6},
+            {material: C.materials.item_scroll_T3, amount: 6},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_resistance_T3, amount: 12},
+            {material: C.materials.item_scroll_T3, amount: 9},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_ballad_T3, amount: 16},
+            {material: C.materials.item_scroll_T3, amount: 12},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        mats_burst: {
+          2: [
+            {material: C.materials.book_freedom_T1, amount: 3},
+            {material: C.materials.item_scroll_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_resistance_T2, amount: 2},
+            {material: C.materials.item_scroll_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_ballad_T2, amount: 4},
+            {material: C.materials.item_scroll_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_freedom_T2, amount: 6},
+            {material: C.materials.item_scroll_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_resistance_T2, amount: 9},
+            {material: C.materials.item_scroll_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_ballad_T3, amount: 4},
+            {material: C.materials.item_scroll_T3, amount: 4},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_freedom_T3, amount: 6},
+            {material: C.materials.item_scroll_T3, amount: 6},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_resistance_T3, amount: 12},
+            {material: C.materials.item_scroll_T3, amount: 9},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_ballad_T3, amount: 16},
+            {material: C.materials.item_scroll_T3, amount: 12},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        crown: C.materials.crown, 
+        description: "Lumine is the canon MC btw"
+      },
+      { 
+        name: 'Traveler (Geo)',
+        individualTalents: true,  
+        picture: require('@/assets/character_portraits/traveler.png'), 
+        iconAtk: require('@/assets/talent_icons/sword_atk.png'), 
+        iconSkill: require('@/assets/talent_icons/traveler_geo_skill.png'), 
+        iconBurst: require('@/assets/talent_icons/traveler_geo_burst.png'),
+        mats_ascension: {
+          elementalMat_T1: C.materials.diamond_T1,
+          elementalMat_T2: C.materials.diamond_T2, 
+          elementalMat_T3: C.materials.diamond_T3, 
+          elementalMat_T4: C.materials.diamond_T4, 
+          speciality: C.materials.speciality_windwheel_aster, 
+          commonMat_Ascension_T1: C.materials.item_mask_T1, 
+          commonMat_Ascension_T2: C.materials.item_mask_T2, 
+          commonMat_Ascension_T3: C.materials.item_mask_T3, 
+        },
+        mats_atk: {
+          2: [
+            {material: C.materials.book_freedom_T1, amount: 3},
+            {material: C.materials.item_scroll_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_resistance_T2, amount: 2},
+            {material: C.materials.item_scroll_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_ballad_T2, amount: 4},
+            {material: C.materials.item_scroll_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_freedom_T2, amount: 6},
+            {material: C.materials.item_scroll_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_resistance_T2, amount: 9},
+            {material: C.materials.item_scroll_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_ballad_T3, amount: 4},
+            {material: C.materials.item_scroll_T3, amount: 4},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_freedom_T3, amount: 6},
+            {material: C.materials.item_scroll_T3, amount: 6},
+            {material: C.materials.boss_dvalins_sigh, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_resistance_T3, amount: 12},
+            {material: C.materials.item_scroll_T3, amount: 9},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_ballad_T3, amount: 16},
+            {material: C.materials.item_scroll_T3, amount: 12},
+            {material: C.materials.boss_dvalins_sigh, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        mats_skill: {
+          2: [
+            {material: C.materials.book_prosperity_T1, amount: 3},
+            {material: C.materials.item_arrow_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_dilligence_T2, amount: 2},
+            {material: C.materials.item_arrow_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_gold_T2, amount: 4},
+            {material: C.materials.item_arrow_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_prosperity_T2, amount: 6},
+            {material: C.materials.item_arrow_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_dilligence_T2, amount: 9},
+            {material: C.materials.item_arrow_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_gold_T3, amount: 4},
+            {material: C.materials.item_arrow_T3, amount: 4},
+            {material: C.materials.boss_boreas_tail, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_prosperity_T3, amount: 6},
+            {material: C.materials.item_arrow_T3, amount: 6},
+            {material: C.materials.boss_boreas_tail, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_dilligence_T3, amount: 12},
+            {material: C.materials.item_arrow_T3, amount: 9},
+            {material: C.materials.boss_boreas_tail, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_gold_T3, amount: 16},
+            {material: C.materials.item_arrow_T3, amount: 12},
+            {material: C.materials.boss_boreas_tail, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        mats_burst: {
+          2: [
+            {material: C.materials.book_prosperity_T1, amount: 3},
+            {material: C.materials.item_arrow_T1, amount: 6},
+            {material: C.materials.mora, amount: 12500}
+          ], 
+          3: [
+            {material: C.materials.book_dilligence_T2, amount: 2},
+            {material: C.materials.item_arrow_T2, amount: 3},
+            {material: C.materials.mora, amount: 17500}
+          ], 
+          4: [
+            {material: C.materials.book_gold_T2, amount: 4},
+            {material: C.materials.item_arrow_T2, amount: 4},
+            {material: C.materials.mora, amount: 25000}
+          ], 
+          5: [
+            {material: C.materials.book_prosperity_T2, amount: 6},
+            {material: C.materials.item_arrow_T2, amount: 6},
+            {material: C.materials.mora, amount: 30000}
+          ], 
+          6: [
+            {material: C.materials.book_dilligence_T2, amount: 9},
+            {material: C.materials.item_arrow_T2, amount: 9},
+            {material: C.materials.mora, amount: 37500}
+          ], 
+          7: [
+            {material: C.materials.book_gold_T3, amount: 4},
+            {material: C.materials.item_arrow_T3, amount: 4},
+            {material: C.materials.boss_boreas_tail, amount: 1},
+            {material: C.materials.mora, amount: 120000}
+          ], 
+          8: [
+            {material: C.materials.book_prosperity_T3, amount: 6},
+            {material: C.materials.item_arrow_T3, amount: 6},
+            {material: C.materials.boss_boreas_tail, amount: 1},
+            {material: C.materials.mora, amount: 260000}
+          ], 
+          9: [
+            {material: C.materials.book_dilligence_T3, amount: 12},
+            {material: C.materials.item_arrow_T3, amount: 9},
+            {material: C.materials.boss_boreas_tail, amount: 2},
+            {material: C.materials.mora, amount: 450000}
+          ], 
+          10: [
+            {material: C.materials.book_gold_T3, amount: 16},
+            {material: C.materials.item_arrow_T3, amount: 12},
+            {material: C.materials.boss_boreas_tail, amount: 2},
+            {material: C.materials.crown, amount: 1},
+            {material: C.materials.mora, amount: 700000}
+          ]
+        },
+        crown: C.materials.crown, 
+        description: "Lumine is the canon MC btw"
+      },
       { 
         name: 'Hu Tao', 
         picture: require('@/assets/character_portraits/hutao.png'), 
