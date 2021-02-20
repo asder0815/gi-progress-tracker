@@ -31,18 +31,15 @@
               <vue-slider v-model="ascension" :label="labels.ascension" :max="6" :marks="true" :contained="true"/>
             </v-container>
           </v-row>
+          <v-row>
+            <v-container>
+              Refine:
+              <vue-slider v-model="refine" :label="labels.refine" :min="0" :max="5" :marks="[0, 1, 2, 3, 4, 5]" :included="true" :contained="true" class="mb-1"/>
+            </v-container>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
-
-    <v-row>
-      <v-switch v-model="crafted" inset label="Crafted"></v-switch>
-      <v-container>
-        Refine:
-        <vue-slider v-model="refine" :label="labels.refine" :min="1" :max="5" :marks="[1, 2, 3, 4, 5]" :included="true" :contained="true" class="mb-1"/>
-      </v-container>
-    </v-row>
-
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on" depressed block> View Required Materials </v-btn>
@@ -87,8 +84,7 @@ export default {
     overlay: false, 
     level: [0, 90], 
     ascension: [0, 6],
-    crafted: false,
-    refine: [1, 5],
+    refine: [0, 5],
     labels: {level: "Levels: ", ascension: "Ascensions: ", refine: "Refine: "}, 
     headers: [{text: "Material", align: "start", value: "name"}, {text: "Icon", sortable: "false", value: "icon"}, {text: "Amount", value: "amount"}]
   }), 
@@ -139,22 +135,15 @@ export default {
       return result; 
     }, 
     summary_requiredRefineMats: function() {
-      var amountCraft = 1 + (Math.max(...this.refine) - Math.min(...this.refine)); 
-      if(this.crafted && amountCraft > 0) amountCraft--; 
+      var amountCraft = (Math.max(...this.refine) - Math.min(...this.refine)); 
       var result = []; 
-      if(this.weaponData.crafted == true && amountCraft > 0) {
-        this.weaponData.craftingMats.forEach(element => {
-          result.push({name: element.item.name, icon: element.item.icon, amount: element.amount * amountCraft}); 
-        }); 
-      }
-      else if(amountCraft > 0) {
-        result.push({name: this.weaponData.name, icon: this.weaponData.picture, amout: amountCraft}); 
-      }
+      this.weaponData.craftingMats.forEach(element => {
+        result.push({name: element.item.name, icon: element.item.icon, amount: element.amount * amountCraft}); 
+      }); 
       return result; 
     },
     summary_requiredRefineMora: function() {
       var amountCraft = Math.max(...this.requiredAscensions) - Math.min(...this.requiredAscensions); 
-      if(this.crafted && amountCraft > 0) amountCraft--; 
       return amountCraft * 500; 
     },
     tableItems: function() {
